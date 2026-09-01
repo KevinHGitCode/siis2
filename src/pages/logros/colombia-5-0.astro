@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = 'Ganadores de la hackathon en Colombia 5.0 — SIIS2';
+const description =
+  'El semillero SIIS2 de la Universidad de La Guajira participó en Colombia 5.0 y ganó la hackathon.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header />
+  <article class="mx-auto max-w-3xl px-4 py-16">
+    <a href="/SIIS2#logros" class="text-sm font-medium text-brand-700 hover:underline">← Volver a logros</a>
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+      Ganadores de la hackathon en Colombia 5.0
+    </h1>
+    <p class="mt-6 text-slate-600">
+      El equipo del semillero <strong>SIIS2</strong> participó en el evento <strong>Colombia 5.0</strong>
+      y obtuvo el primer lugar en la hackathon.
+    </p>
+    <p class="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
+      Borrador. Pendiente de confirmar con el semillero: fecha exacta, categoría, reto resuelto,
+      integrantes que participaron, enlace a los resultados oficiales y fotos con autorización.
+    </p>
+  </article>
+  <Footer />
+</BaseLayout>

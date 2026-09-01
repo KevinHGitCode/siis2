@@ -1,0 +1,37 @@
+---
+import { SEMILLERO } from '../data/semillero';
+import { PROYECTOS } from '../data/proyectos';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-slate-200 bg-slate-50">
+  <div class="mx-auto grid max-w-5xl gap-8 px-4 py-12 sm:grid-cols-3">
+    <div>
+      <p class="font-bold text-slate-900">{SEMILLERO.nombreCorto}</p>
+      <p class="mt-2 text-sm text-slate-600">{SEMILLERO.nombreLargo}</p>
+      <p class="mt-1 text-sm text-slate-600">{SEMILLERO.programa} · Sede {SEMILLERO.sede}</p>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-slate-900">Proyectos</p>
+      <ul class="mt-2 space-y-1 text-sm text-slate-600">
+        {PROYECTOS.map((p) => (
+          <li><a class="transition hover:text-brand-700" href={p.href}>{p.nombre}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-slate-900">Universidad</p>
+      <ul class="mt-2 space-y-1 text-sm text-slate-600">
+        <li>
+          <a class="transition hover:text-brand-700" href={SEMILLERO.universidadUrl} rel="noopener" target="_blank">
+            {SEMILLERO.universidad}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    © {year} {SEMILLERO.nombreCorto} — {SEMILLERO.universidad}
+  </div>
+</footer>

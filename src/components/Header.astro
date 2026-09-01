@@ -1,0 +1,22 @@
+---
+import { SEMILLERO } from '../data/semillero';
+
+const links = [
+  { href: '#que-es', label: 'Qué es' },
+  { href: '#integrantes', label: 'Integrantes' },
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#logros', label: 'Logros' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+  <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+    <a href="#top" class="font-bold tracking-tight text-slate-900">{SEMILLERO.nombreCorto}</a>
+    <ul class="hidden gap-6 text-sm font-medium text-slate-600 sm:flex">
+      {links.map((l) => (
+        <li><a class="transition hover:text-brand-700" href={l.href}>{l.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>

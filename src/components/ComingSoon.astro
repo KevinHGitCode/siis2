@@ -1,0 +1,12 @@
+---
+interface Props {
+  nota?: string;
+}
+
+const { nota } = Astro.props;
+---
+
+<div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-sm text-slate-500">
+  <p class="font-medium text-slate-600">Próximamente</p>
+  {nota && <p class="mt-1">{nota}</p>}
+</div>

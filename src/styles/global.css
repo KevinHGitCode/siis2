@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/*
+  Paleta provisional. Reemplazar el azul por el color real del logo del
+  semillero cuando llegue el archivo en alta resolucion.
+*/
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+}
+
+html {
+  scroll-behavior: smooth;
+}
