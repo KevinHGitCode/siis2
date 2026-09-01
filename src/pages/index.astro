@@ -4,7 +4,6 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Section from '../components/Section.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import PersonCard from '../components/PersonCard.astro';
 import AchievementCard from '../components/AchievementCard.astro';
 import ComingSoon from '../components/ComingSoon.astro';
 import { SEMILLERO } from '../data/semillero';
@@ -50,11 +49,10 @@ import { LOGROS } from '../data/logros';
 
   <!-- Integrantes -->
   <Section id="integrantes" titulo="Integrantes">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {INTEGRANTES.map((i) => <PersonCard integrante={i} />)}
-    </div>
-    <p class="mt-6 text-sm text-slate-500">
-      Docente líder: <span class="font-medium text-slate-700">{SEMILLERO.docenteLider}</span>
+    <p class="max-w-3xl text-slate-600">
+      Este semillero está dirigido por <span class="font-medium text-slate-700">{SEMILLERO.docenteLider}</span>.
+      Estudiantes pertenecientes al semillero de investigación de Ingeniería de Sistemas son los siguientes:
+      {INTEGRANTES.map((i) => i.nombre).join(', ')}.
     </p>
   </Section>
 
