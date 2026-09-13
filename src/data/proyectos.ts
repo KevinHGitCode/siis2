@@ -24,9 +24,11 @@ export const PROYECTOS: Proyecto[] = [
     nombre: 'Sofía',
     alias: 'inventario uniguajira',
     descripcion: 'Sistema de gestión de inventario para la universidad.',
-    // PENDIENTE: no aparece en public_html (solo "asistencia" e "invoritech", que
-    // es un proyecto distinto). Confirmar repo, estado real y subdominio.
-    estado: 'Sin confirmar',
-    fechaConfirmada: '2026-09-01', // fecha en que Kevin la nombró como proyecto del semillero
+    // Sin `href` A PROPÓSITO (no por falta de dato): Kevin confirmó que está
+    // 100% funcional, pero pidió mantenerla oculta, sin enlace público, solo
+    // mostrar información, hasta nuevo aviso. No agregar href sin que él lo pida.
+    // PENDIENTE (para luego, no ahora): cuál repo de C:\Projects es este proyecto.
+    estado: 'Desplegado',
+    fechaConfirmada: '2026-09-13', // fecha en que Kevin confirmó "100% funcional" + ocultarla
   },
 ];

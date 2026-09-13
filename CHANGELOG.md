@@ -42,3 +42,7 @@ en cada caso). Ver la regla completa en `CLAUDE.md`.
   real y en vivo de Aura.
 - Regla nueva: todo dato en `src/data/*.ts` lleva fecha de cuándo se confirmó
   (no inventada). Este changelog arranca hoy.
+- Kevin confirmó: **Sofía está 100% funcional**, pero pidió mantenerla **oculta,
+  sin enlace público** por ahora (solo mostrar información en `/siis2`). No es
+  falta de dato — es decisión deliberada, no agregar `href` sin que lo pida.
+  Repo real de Sofía en `C:\Projects`: **queda para después** (no se define hoy).
