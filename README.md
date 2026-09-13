@@ -33,20 +33,30 @@ npm run preview
 > Si `npm install` falla por versiones, alinea `package.json` con las del blog
 > (`C:\Projects\Blog\blog\package.json`).
 
-## Despliegue
+## Despliegue (hosting compartido — confirmado 13 sept 2026)
 
-El sitio se sirve en la **raíz** del dominio, pero el dominio también tiene que servir Aura y
-Sofía (apps Laravel aparte) en sus propias subcarpetas. Ejemplo nginx:
+`desarrollougmaicao.com` es hosting compartido (SSH: `u946584072@us-bos-web1978`), no un VPS con
+nginx propio. `public_html/` es el document root del dominio raíz y **ya tiene otros proyectos
+ahí** (`public_html/asistencia`, `public_html/invoritech`) vinculados como **subdominios**
+(`asistencia.desarrollougmaicao.com`, `invoritech.desarrollougmaicao.com`).
 
-```nginx
-location /asistencia-uniguajira { proxy_pass http://aura_app; }
-location /inventario-uniguajira { proxy_pass http://sofia_app; }
+**Este sitio es estático: no hace falta Node en el servidor.** Se construye localmente y solo se
+sube `dist/`:
 
-location / {
-  root /var/www/siis2-web/dist;
-  try_files $uri $uri/ =404;
-}
+```bash
+npm run build
+rsync -avz dist/ u946584072@us-bos-web1978:~/public_html/
+# alternativa sin rsync:
+# scp -r dist/* u946584072@us-bos-web1978:~/public_html/
 ```
+
+⚠️ **No borrar ni sobreescribir** `public_html/asistencia` ni `public_html/invoritech` — ninguno
+de los archivos de `dist/` choca con esos nombres, así que es seguro fusionar (sin `--delete` en
+rsync, sin `rm` previo).
+
+⚠️ **Contenido duplicado:** como esas carpetas de subdominio viven dentro del document root de la
+raíz, también quedan visibles en `desarrollougmaicao.com/asistencia` y `.../invoritech`. Por eso
+`public/robots.txt` las bloquea (`Disallow`) — así Google solo indexa la versión del subdominio.
 
 - `robots.txt` y el `sitemap-index.xml` quedan en la raíz del dominio (`.../sitemap-index.xml`).
 - Verificar el sitio en **Google Search Console** (registro TXT en el DNS) apenas esté publicado.
