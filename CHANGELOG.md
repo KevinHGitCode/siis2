@@ -46,3 +46,13 @@ en cada caso). Ver la regla completa en `CLAUDE.md`.
   sin enlace público** por ahora (solo mostrar información en `/siis2`). No es
   falta de dato — es decisión deliberada, no agregar `href` sin que lo pida.
   Repo real de Sofía en `C:\Projects`: **queda para después** (no se define hoy).
+- **Logo real de SIIS2 incorporado.** Kevin pasó los 3 archivos oficiales
+  (`SIIS2 Blanco/Colores/Negro.png`, ya usados en el repo de Aura). Se archivaron
+  los originales en `brand/`, se generaron versiones web optimizadas (recortadas +
+  640px) en `public/images/logo/`, se creó `public/favicon.png` a partir del logo,
+  y la paleta `brand-*` pasó del azul provisional al naranja real del wordmark.
+  Header y hero de `/siis2` ahora muestran el logo; el portal `/` muestra una
+  miniatura del logo solo en la tarjeta de SIIS2 (no en el header del portal, para
+  no mezclar la identidad del dominio con la del semillero).
+- Corregidos 2 bugs de texto sin espacio ("Sistemasde", "siguientes:Kevin") y un
+  `<a>` sin `href` en el footer para Sofía (rompía accesibilidad).

@@ -16,7 +16,13 @@ const year = new Date().getFullYear();
       <p class="text-sm font-semibold text-slate-900">Proyectos</p>
       <ul class="mt-2 space-y-1 text-sm text-slate-600">
         {PROYECTOS.map((p) => (
-          <li><a class="transition hover:text-brand-700" href={p.href}>{p.nombre}</a></li>
+          <li>
+            {p.href ? (
+              <a class="transition hover:text-brand-700" href={p.href}>{p.nombre}</a>
+            ) : (
+              <span class="text-slate-400">{p.nombre}</span>
+            )}
+          </li>
         ))}
       </ul>
     </div>

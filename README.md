@@ -61,6 +61,23 @@ raíz, también quedan visibles en `desarrollougmaicao.com/asistencia` y `.../in
 - `robots.txt` y el `sitemap-index.xml` quedan en la raíz del dominio (`.../sitemap-index.xml`).
 - Verificar el sitio en **Google Search Console** (registro TXT en el DNS) apenas esté publicado.
 
+## Marca
+
+Logo real de SIIS2 cargado el 2026-09-13 desde `Asistencia-Uniguajira/public/images/`.
+
+- `brand/siis2-logo-*-original.png` — archivos fuente sin tocar (6000×3375, ~5–7MB c/u).
+  No se sirven en la web, quedan como archivo.
+- `public/images/logo/siis2-logo-{colores,blanco,negro}.png` — versiones recortadas
+  (sin el margen transparente) y reducidas (640px de ancho) para uso en el sitio.
+- `public/images/logo/siis2-logo-colores-header.png` — versión más chica (320px) para
+  el header.
+- `public/favicon.png` — favicon generado a partir de la versión a color.
+- La paleta `brand-*` en `src/styles/global.css` sale del naranja del logo (ya no es el
+  azul provisional).
+
+Para regenerar las versiones web si llega un logo nuevo, usar `sharp` (ya es dependencia):
+`trim()` + `resize({ width: 640 })` + `png({ compressionLevel: 9 })`.
+
 ## Dónde está el contenido
 
 Todo el texto editable vive en `src/data/`:

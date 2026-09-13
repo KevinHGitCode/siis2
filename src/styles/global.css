@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 /*
-  Paleta provisional. Reemplazar el azul por el color real del logo del
-  semillero cuando llegue el archivo en alta resolucion.
+  Paleta derivada del logo real de SIIS2 (naranja del wordmark), confirmado y
+  cargado el 2026-09-13 desde brand/siis2-logo-*-original.png.
 */
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
+  --color-brand-50: #fff3e7;
+  --color-brand-100: #ffe1c2;
+  --color-brand-600: #f2791d;
+  --color-brand-700: #d9630d;
+  --color-brand-800: #b34f0b;
 }
 
 html {
