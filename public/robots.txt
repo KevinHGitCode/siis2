@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://desarrollougmaicao.com/SIIS2/sitemap-index.xml
+Sitemap: https://desarrollougmaicao.com/sitemap-index.xml

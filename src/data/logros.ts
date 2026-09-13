@@ -11,6 +11,6 @@ export const LOGROS: Logro[] = [
     titulo: 'Ganadores de la hackathon en Colombia 5.0',
     resumen:
       'El equipo del semillero participó en el evento Colombia 5.0 y ganó la hackathon. Detalles, categoría y fotos: pendiente de confirmar con el semillero.',
-    href: '/SIIS2/logros/colombia-5-0',
+    href: '/siis2/logros/colombia-5-0',
   },
 ];

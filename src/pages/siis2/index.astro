@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Section from '../../components/Section.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import AchievementCard from '../../components/AchievementCard.astro';
+import ComingSoon from '../../components/ComingSoon.astro';
+import { SEMILLERO } from '../../data/semillero';
+import { INTEGRANTES } from '../../data/integrantes';
+import { PROYECTOS } from '../../data/proyectos';
+import { LOGROS } from '../../data/logros';
+---
+
+<BaseLayout>
+  <span id="top"></span>
+  <Header />
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-5xl px-4 pb-8 pt-20 text-center">
+    <p class="text-sm font-semibold uppercase tracking-wider text-brand-700">
+      {SEMILLERO.programa} · {SEMILLERO.universidad} · Sede {SEMILLERO.sede}
+    </p>
+    <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+      {SEMILLERO.nombreLargo}
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600">{SEMILLERO.descripcionCorta}</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="#proyectos" class="rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800">
+        Ver proyectos
+      </a>
+      <a href="#que-es" class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+        Conocer el semillero
+      </a>
+    </div>
+  </section>
+
+  <!-- Qué es -->
+  <Section id="que-es" titulo="Qué es el semillero">
+    <p class="max-w-3xl text-slate-600">
+      {SEMILLERO.nombreCorto} es un semillero de investigación del programa de {SEMILLERO.programa}
+      de la {SEMILLERO.universidad} (sede {SEMILLERO.sede}), fundado en {SEMILLERO.fundacion}.
+      Reúne a estudiantes que construyen software aplicado a problemas reales de la universidad y la región.
+    </p>
+    <p class="mt-3 max-w-3xl text-sm text-slate-400">
+      Borrador — la misión, la visión y las líneas de investigación oficiales se publicarán cuando el semillero las defina.
+    </p>
+  </Section>
+
+  <!-- Integrantes -->
+  <Section id="integrantes" titulo="Integrantes">
+    <p class="max-w-3xl text-slate-600">
+      Este semillero está dirigido por <span class="font-medium text-slate-700">{SEMILLERO.docenteLider}</span>.
+      Estudiantes pertenecientes al semillero de investigación de Ingeniería de Sistemas son los siguientes:
+      {INTEGRANTES.map((i) => i.nombre).join(', ')}.
+    </p>
+  </Section>
+
+  <!-- Proyectos -->
+  <Section id="proyectos" titulo="Proyectos">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {PROYECTOS.map((p) => <ProjectCard proyecto={p} />)}
+    </div>
+  </Section>
+
+  <!-- Logros -->
+  <Section id="logros" titulo="Logros">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {LOGROS.map((l) => <AchievementCard logro={l} />)}
+    </div>
+  </Section>
+
+  <!-- Cómo ingresar -->
+  <Section id="ingresar" titulo="Cómo ingresar">
+    <ComingSoon nota="Requisitos y convocatoria para nuevos integrantes. Pendiente de definir con el semillero." />
+  </Section>
+
+  <!-- Contacto -->
+  <Section id="contacto" titulo="Contacto">
+    <ComingSoon nota="Correo oficial y formulario de contacto. Pendiente de definir con el semillero." />
+  </Section>
+
+  <Footer />
+</BaseLayout>

@@ -1,11 +1,19 @@
 # siis2-web
 
-Sitio del **Semillero de Investigación de Ingeniería de Sistemas 2 (SIIS2)** —
-Universidad de La Guajira, sede Maicao.
+Sitio que ocupa la **raíz de `https://desarrollougmaicao.com`**.
 
-Objetivo: hub del semillero, optimizado para posicionar en Google, y punto de
-partida de la **red de páginas** de los proyectos del semillero (cada proyecto
-enlaza de vuelta a este hub).
+- **`/`** — portal del dominio: presenta "Desarrollo UG Maicao" y enlaza al semillero y a sus
+  proyectos. No es una página de paso: tiene contenido propio y su propio SEO.
+- **`/siis2`** — página del **Semillero de Investigación de Ingeniería de Sistemas 2 (SIIS2)**,
+  Universidad de La Guajira, sede Maicao. Hub de la red: enlaza a cada proyecto, y cada proyecto
+  enlaza de vuelta acá.
+
+Por qué separados y no `/` = directamente el semillero: el dominio se llama "desarrollo UG
+Maicao", no "SIIS2" — atar la raíz a un semillero específico le cierra la puerta a que el dominio
+crezca con más grupos/proyectos, y liga su identidad a una composición de estudiantes que rota
+cada año. Separado, además, `/` puede posicionar por el término genérico del dominio mientras
+`/siis2` posiciona por el semillero — dos apuestas en vez de una. Detalle en el segundo cerebro:
+`MyBrain/proyectos/idea-web-semillero-siis2.md`.
 
 ## Stack
 
@@ -17,7 +25,7 @@ enlaza de vuelta a este hub).
 
 ```bash
 npm install
-npm run dev      # http://localhost:4321/SIIS2
+npm run dev      # http://localhost:4321/
 npm run build    # genera dist/
 npm run preview
 ```
@@ -27,23 +35,21 @@ npm run preview
 
 ## Despliegue
 
-- Se publica en **`https://desarrollougmaicao.com/SIIS2`** → por eso
-  `astro.config.mjs` tiene `base: '/SIIS2'`. El contenido de `dist/` se sirve
-  bajo esa ruta.
-- La **raíz `/` redirige (301) a `/SIIS2`**. Eso se configura en el servidor,
-  no en Astro. Ejemplo nginx:
+El sitio se sirve en la **raíz** del dominio, pero el dominio también tiene que servir Aura y
+Sofía (apps Laravel aparte) en sus propias subcarpetas. Ejemplo nginx:
 
-  ```nginx
-  location = / { return 301 /SIIS2; }
-  location /SIIS2/ { alias /var/www/siis2-web/dist/; try_files $uri $uri/ =404; }
-  ```
+```nginx
+location /asistencia-uniguajira { proxy_pass http://aura_app; }
+location /inventario-uniguajira { proxy_pass http://sofia_app; }
 
-- `robots.txt` y el `sitemap` efectivos del dominio deben referenciar
-  `https://desarrollougmaicao.com/SIIS2/sitemap-index.xml`. El `public/robots.txt`
-  de este repo es la referencia; según cómo quede el dominio raíz puede haber que
-  consolidar un único `robots.txt` a nivel de dominio.
-- Verificar el sitio en **Google Search Console** (registro TXT en el DNS) apenas
-  esté publicado.
+location / {
+  root /var/www/siis2-web/dist;
+  try_files $uri $uri/ =404;
+}
+```
+
+- `robots.txt` y el `sitemap-index.xml` quedan en la raíz del dominio (`.../sitemap-index.xml`).
+- Verificar el sitio en **Google Search Console** (registro TXT en el DNS) apenas esté publicado.
 
 ## Dónde está el contenido
 
@@ -54,12 +60,11 @@ Todo el texto editable vive en `src/data/`:
 | `semillero.ts` | Identidad, docente líder, descripción SEO. Campos `null`/`[]` = pendientes. |
 | `integrantes.ts` | Los 4 integrantes (nombres públicos autorizados). |
 | `proyectos.ts` | Aura («asistencia uniguajira») y Sofía («inventario uniguajira»). ⚠️ Confirmar `href` real. |
-| `logros.ts` | Hackathon Colombia 5.0 → artículo en `src/pages/logros/`. |
+| `logros.ts` | Hackathon Colombia 5.0 → artículo en `src/pages/siis2/logros/`. |
 
-El diseño se arma componiendo secciones en `src/pages/index.astro` con los
-componentes de `src/components/` (`ProjectCard`, `PersonCard`, `AchievementCard`,
-`Section`, `ComingSoon`). Reordenar o duplicar secciones = mover bloques en ese
-archivo.
+`src/pages/index.astro` (el portal) arma su directorio a partir de `SEMILLERO` y `PROYECTOS` — no
+duplicar esos datos ahí. El diseño de `/siis2` se arma componiendo secciones en
+`src/pages/siis2/index.astro` con los componentes de `src/components/`.
 
 ## Pendiente (documento para el prof. Carlos Deluquez)
 

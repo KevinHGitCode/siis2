@@ -3,11 +3,12 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 
-// El sitio se despliega en https://desarrollougmaicao.com/SIIS2
-// La raiz "/" se redirige (301) a "/SIIS2" a nivel de servidor (ver README).
+// El sitio ocupa la RAIZ de https://desarrollougmaicao.com.
+// "/" es el portal del dominio; "/siis2" es la pagina del semillero.
+// Otros proyectos (Aura, Sofia) viven en sus propias subcarpetas, servidos por
+// otras apps detras del mismo dominio (ver README - nginx).
 export default defineConfig({
   site: 'https://desarrollougmaicao.com',
-  base: '/SIIS2',
   trailingSlash: 'ignore',
   integrations: [mdx(), sitemap()],
   vite: {
