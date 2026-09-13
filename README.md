@@ -2,7 +2,7 @@
 
 Sitio que ocupa la **raíz de `https://desarrollougmaicao.com`**.
 
-- **`/`** — portal del dominio: presenta "Desarrollo UG Maicao" y enlaza al semillero y a sus
+- **`/`** — portal del dominio: presenta "Desarrollo Uniguajira Maicao" y enlaza al semillero y a sus
   proyectos. No es una página de paso: tiene contenido propio y su propio SEO.
 - **`/siis2`** — página del **Semillero de Investigación de Ingeniería de Sistemas 2 (SIIS2)**,
   Universidad de La Guajira, sede Maicao. Hub de la red: enlaza a cada proyecto, y cada proyecto
