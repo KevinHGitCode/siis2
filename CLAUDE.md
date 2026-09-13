@@ -24,6 +24,21 @@ de la red de páginas de los proyectos del semillero.
 - **Nombres de integrantes:** solo los 4 ya autorizados. No agregar personas ni
   datos de contacto sin confirmación.
 
+## Fechas — regla obligatoria (desde 13 sept 2026)
+
+Este proyecto puede seguir vivo por años. Sin fecha, se pierde el "cuándo pasó qué".
+
+- Toda entrada nueva o editada en `src/data/*.ts` lleva su campo de fecha
+  (`fechaConfirmada`, `fechaRegistro`, etc.) en formato `AAAA-MM-DD`.
+- **La fecha es de cuándo SE CONFIRMÓ el dato, no una fecha inventada.** Si no se
+  sabe la fecha real del hecho (ej. cuándo se desplegó algo por primera vez), se
+  anota cuándo se confirmó y se aclara la diferencia (ver `Proyecto.fechaConfirmada`
+  como ejemplo).
+- Todo cambio de fondo (nueva página, decisión de arquitectura, dato nuevo,
+  corrección) se anota con fecha real en `CHANGELOG.md` — nunca "hoy" ni fechas
+  relativas.
+- Esta misma disciplina aplica en `MyBrain/proyectos/idea-web-semillero-siis2.md`.
+
 ## Comandos
 
 `npm run dev` · `npm run build` · `npm run preview`
