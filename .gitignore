@@ -1,5 +1,7 @@
 # build output
-dist/
+# dist/ se versiona a propósito: el build en el hosting compartido crashea
+# (binario nativo de esbuild/sharp incompatible), así que se compila local y
+# se sube ya hecho. El servidor solo hace `git pull`, nunca `npm run build`.
 .output/
 
 # dependencies

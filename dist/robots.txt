@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# "asistencia" e "invoritech" son document roots de subdominios, pero al vivir
+# dentro de public_html tambien quedan alcanzables por la ruta de la raiz
+# (contenido duplicado). Se bloquean aqui para que Google indexe solo la
+# version del subdominio.
+Disallow: /asistencia/
+Disallow: /invoritech/
+
+Sitemap: https://desarrollougmaicao.com/sitemap-index.xml
