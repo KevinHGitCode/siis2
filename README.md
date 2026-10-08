@@ -40,19 +40,28 @@ nginx propio. `public_html/` es el document root del dominio raíz y **ya tiene 
 ahí** (`public_html/asistencia`, `public_html/invoritech`) vinculados como **subdominios**
 (`asistencia.desarrollougmaicao.com`, `invoritech.desarrollougmaicao.com`).
 
-**Este sitio es estático: no hace falta Node en el servidor.** Se construye localmente y solo se
-sube `dist/`:
+**Este sitio es estático: no hace falta Node en el servidor.** Se construye localmente, se hace commit
+de `dist/` (se versiona a propósito) y en el servidor solo se hace `git pull`. El repo vive en
+`~/domains/desarrollougmaicao.com/siis2-web`, **fuera** de `public_html`, y `public_html` lo enlaza:
 
-```bash
-npm run build
-rsync -avz dist/ u946584072@us-bos-web1978:~/public_html/
-# alternativa sin rsync:
-# scp -r dist/* u946584072@us-bos-web1978:~/public_html/
+```
+public_html/siis2          -> ../siis2-web/dist/siis2      (carpeta: páginas de /siis2/… + _astro/ + images/ + favicon.png)
+public_html/index.html     -> ../siis2-web/dist/index.html (el portal de /)
+public_html/robots.txt     -> ../siis2-web/dist/robots.txt
+public_html/sitemap-*.xml  -> ../siis2-web/dist/sitemap-*.xml
 ```
 
-⚠️ **No borrar ni sobreescribir** `public_html/asistencia` ni `public_html/invoritech` — ninguno
-de los archivos de `dist/` choca con esos nombres, así que es seguro fusionar (sin `--delete` en
-rsync, sin `rm` previo).
+Solo `siis2` es una carpeta. Lo demás son archivos que tienen que estar en la raíz del dominio (portal, robots y sitemap).
+Por eso **todo lo estático que no es una página cuelga de `/siis2/`**: `/siis2/_astro/` (JS/CSS generados, ver
+`build.assets` en `astro.config.mjs`), `/siis2/images/` y `/siis2/favicon.png` (viven en `public/siis2/`; el prefijo está en
+`src/consts.ts`). Las páginas siguen en `/` y `/siis2/…`. Sin esto, cada carpeta de `dist/` (`_astro`, `images`…) pedía su
+propio enlace en `public_html`, y un panel que lea `public_html` las tomaba por subdominios.
+
+Cambio de despliegue (una sola vez, ya con este orden): `git pull` y quitar los enlaces viejos que quedaron rotos
+(`public_html/_astro`, `public_html/images`, `public_html/favicon.png`) con `rm` (sin `-r`: son enlaces). No hay que tocar
+`siis2`, `index.html`, `robots.txt` ni los sitemap: siguen apuntando a los mismos nombres.
+
+⚠️ **No tocar** `public_html/asistencia`, `invoritech` y los demás enlaces de otros proyectos.
 
 ⚠️ **Contenido duplicado:** como esas carpetas de subdominio viven dentro del document root de la
 raíz, también quedan visibles en `desarrollougmaicao.com/asistencia` y `.../invoritech`. Por eso

@@ -4,6 +4,15 @@ Registro con fecha de las decisiones y cambios de fondo del proyecto. Fecha real
 del hecho cuando se conoce; si no, la fecha en que se confirmó el dato (aclarado
 en cada caso). Ver la regla completa en `CLAUDE.md`.
 
+## 2026-10-07
+
+- **Salida de `dist/` ordenada para el hosting.** Antes la raíz de `dist/` tenía `_astro/`, `images/`, `siis2/`, `favicon.png`,
+  `index.html`, `robots.txt` y los sitemap, y `public_html` necesitaba un enlace por cada una (los de carpeta se veían como
+  subdominios inexistentes en el panel de administración). Ahora lo estático cuelga de `/siis2/` (`public/siis2/images`,
+  `public/siis2/favicon.png`, `build.assets: 'siis2/_astro'`, `ASSETS` en `src/consts.ts`) y alcanza **un solo enlace de carpeta**
+  (`public_html/siis2`) más los archivos de la raíz. Las URLs de las páginas (`/`, `/siis2/`, `/siis2/logros/…`) no cambian; cambian
+  las de los recursos (`/images/…` → `/siis2/images/…`, `/_astro/…` → `/siis2/_astro/…`). Build y vista previa verificados en local.
+
 ## 2026-09-01
 
 - Idea registrada en el segundo cerebro: web del semillero SIIS2 + red de páginas

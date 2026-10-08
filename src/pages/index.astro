@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SEMILLERO } from '../data/semillero';
 import { PROYECTOS } from '../data/proyectos';
+import { ASSETS } from '../consts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -18,7 +19,7 @@ const destinos = [
     descripcion: SEMILLERO.descripcionCorta,
     href: '/siis2',
     etiqueta: 'Semillero de investigación',
-    logo: `${base}/images/logo/siis2-logo-colores-header.png`,
+    logo: `${base}${ASSETS}/images/logo/siis2-logo-colores-header.png`,
   },
   ...PROYECTOS.map((p) => ({
     nombre: p.nombre,

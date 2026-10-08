@@ -10,6 +10,7 @@ import { SEMILLERO } from '../../data/semillero';
 import { INTEGRANTES } from '../../data/integrantes';
 import { PROYECTOS } from '../../data/proyectos';
 import { LOGROS } from '../../data/logros';
+import { ASSETS } from '../../consts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -21,7 +22,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Hero -->
   <section class="mx-auto max-w-5xl px-4 pb-8 pt-16 text-center">
     <img
-      src={`${base}/images/logo/siis2-logo-colores.png`}
+      src={`${base}${ASSETS}/images/logo/siis2-logo-colores.png`}
       alt={SEMILLERO.nombreLargo}
       class="mx-auto h-28 w-auto sm:h-36"
       width="640"

@@ -39,6 +39,13 @@ Este proyecto puede seguir vivo por años. Sin fecha, se pierde el "cuándo pas�
   relativas.
 - Esta misma disciplina aplica en `MyBrain/proyectos/idea-web-semillero-siis2.md`.
 
+## Estructura de salida (importante para el despliegue)
+
+En el hosting, `public_html` enlaza `dist/` con **un enlace por cada entrada de la raíz de `dist/`**. Para que sean pocos, la raíz de
+`dist/` solo debe tener `index.html`, `robots.txt`, los `sitemap` y la carpeta `siis2/`. Todo lo estático (imágenes, favicon, JS/CSS
+generados) va bajo `/siis2/`: `public/siis2/…`, `ASSETS` en `src/consts.ts` y `build.assets: 'siis2/_astro'`. **No pongas carpetas
+nuevas en `public/` ni en la raíz de `dist/`**; cuélgalas de `public/siis2/`. Las URLs de las páginas no cambian.
+
 ## Comandos
 
 `npm run dev` · `npm run build` · `npm run preview`

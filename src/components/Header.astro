@@ -1,5 +1,6 @@
 ---
 import { SEMILLERO } from '../data/semillero';
+import { ASSETS } from '../consts';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -16,7 +17,7 @@ const links = [
   <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-2">
     <a href="#top" class="flex items-center gap-2">
       <img
-        src={`${base}/images/logo/siis2-logo-colores-header.png`}
+        src={`${base}${ASSETS}/images/logo/siis2-logo-colores-header.png`}
         alt={SEMILLERO.nombreCorto}
         class="h-9 w-auto"
         width="320"
