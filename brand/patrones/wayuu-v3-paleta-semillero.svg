@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="256" viewBox="0 0 64 256">
+
+<g id="coral" fill="none" stroke="#d22d17" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10">
+  <path d="M-8 96 L34 140 L-4 180 L34 220 L-8 264"/>
+</g>
+<use href="#coral" y="-256"/>
+<g fill="#d22d17"><path d="M0 124 L12 140 L0 156Z"/><path d="M0 204 L12 220 L0 236Z"/></g>
+<g fill="none" stroke="#f9ae06" stroke-width="12" stroke-linejoin="miter" stroke-miterlimit="10"><path d="M42 2 L2 46 L0 54 L42 100"/></g>
+<path fill="#f9ae06" fill-rule="evenodd" d="M20 24 L44 52 L20 80 L-4 52 Z M20 40 L28 52 L20 64 L12 52 Z"/>
+<path fill="#02b4b4" d="M36 168 L45 180 L36 192 L27 180 Z"/>
+<g fill="#f85906"><path d="M30 126 L36 134 L30 142 L24 134Z"/><path d="M30 206 L36 214 L30 222 L24 214Z"/></g>
+</svg>

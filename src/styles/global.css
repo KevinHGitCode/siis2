@@ -48,18 +48,25 @@ html {
 }
 
 /*
-  Banda de rombos inspirada en el patrón del "2" del logo (teal, rojo, amarillo). SVG embebido: 0 peticiones.
-  Es un adorno del diseño de la marca, no una reproducción de un tejido: no usarla detrás de texto.
+  Banda wayuu (V3, elegida el 2026-10-13): la tira vertical de brand/patrones girada 90°, con los colores del logo SIIS2.
+  Las bandas viven en src/styles/banda-v3*.svg (las genera scripts/generar-patrones.mjs; Vite las incrusta aquí, 0 peticiones).
+  - .banda-wayuu         borde recto arriba: "cuelga" (pie, bloque Súmate, tarjetas)
+  - .banda-wayuu-arriba  borde recto abajo: "sube" (remate del hero)
+  - .banda-wayuu-fina    versión más baja (tarjetas)
+  Es un adorno de la marca derivado de un motivo wayuu, no la reproducción de un tejido: no usarla detrás de texto.
 */
 .banda-wayuu {
-  height: 14px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='14' viewBox='0 0 40 14'%3E%3Cpath d='M10 1L19 7L10 13L1 7Z' fill='%2302b4b4'/%3E%3Cpath d='M10 4.5L13.5 7L10 9.5L6.5 7Z' fill='%23fff3e7'/%3E%3Cpath d='M30 1L39 7L30 13L21 7Z' fill='%23d22d17'/%3E%3Cpath d='M30 4.5L33.5 7L30 9.5L26.5 7Z' fill='%23f9ae06'/%3E%3C/svg%3E");
+  height: 44px;
+  background-image: url('./banda-v3.svg');
   background-repeat: repeat-x;
-  background-size: 40px 14px;
+  background-size: 176px 44px;
+}
+.banda-wayuu-arriba {
+  background-image: url('./banda-v3-arriba.svg');
 }
 .banda-wayuu-fina {
-  height: 8px;
-  background-size: 23px 8px;
+  height: 28px;
+  background-size: 112px 28px;
 }
 
 /*

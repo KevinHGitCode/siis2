@@ -85,9 +85,11 @@ Logo real de SIIS2 cargado el 2026-09-13 desde `Asistencia-Uniguajira/public/ima
   → `brand-*` y `wayuu-*` en `src/styles/global.css` (solo `brand-700/800` sirven para texto: pasan AA).
 - Tipografía de titulares: **Bricolage Grotesque** (paquete `@fontsource-variable/bricolage-grotesque`, solo subconjunto latin,
   ~41 KB, con `preload`). El cuerpo usa la fuente del sistema.
-- **Banda wayuu** (`.banda-wayuu`, componente `Banda.astro`): rombos teal/rojo/amarillo inspirados en el «2» del logo, SVG
-  embebido en el CSS. Es un adorno de la marca, **no** una reproducción de un tejido: se usa en el hero, como divisor y en el
-  remate de tarjetas, nunca detrás de texto.
+- **Banda wayuu (V3)** (`.banda-wayuu`, componente `Banda.astro`): la tira de `brand/patrones/wayuu-v3-paleta-semillero.svg` girada 90°, con los colores
+  del logo. Hay tres variantes: normal (borde recto arriba, «cuelga»: pie, Súmate, tarjetas), `arriba` (borde recto abajo, «sube»: remate del hero) y `fina`.
+  Las tres versiones del patrón (V1 fiel, V2 geométrica, V3 paleta SIIS2) se conservan en `brand/patrones/`; `node scripts/generar-patrones.mjs` las regenera
+  y escribe `src/styles/banda-v3*.svg`. Es un adorno de la marca derivado de un motivo wayuu, **no** la reproducción de un tejido, y se usa
+  como divisor y remate, nunca detrás de texto.
 - Movimiento: solo `opacity`/`transform`, con `prefers-reduced-motion`. `.entra` (carga) y `.revela` (al hacer scroll, CSS puro
   con `animation-timeline: view()`; sin soporte, p. ej. Firefox, el contenido se ve completo).
 

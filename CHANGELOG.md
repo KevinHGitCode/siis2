@@ -28,6 +28,15 @@ en cada caso). Ver la regla completa en `CLAUDE.md`.
   - *Pendiente:* la miniatura de Aura con captura real (datos demo), el RSS y «Últimas novedades» en el portal cuando haya más de un hito con fecha,
     y las fotos del equipo (con consentimiento). `dist/` reconstruido; verificado en local (escritorio y móvil).
 
+- **Banda wayuu propia: se aplica la V3.** A partir de una franja de Uniguajira que pasó Kevin se midió el motivo (periodo de 252 px, ancho de 65 px,
+  colores #e75e4e/#f5a536/#22b4b7) y se dibujaron tres versiones en `brand/patrones/` (`wayuu-v1-fiel.svg`, `wayuu-v2-geometrica.svg`,
+  `wayuu-v3-paleta-semillero.svg`; se conservan las tres; las genera `scripts/generar-patrones.mjs`). Kevin eligió la **V3** (geometría de V2 con los colores del
+  logo SIIS2: rojo #d22d17, amarillo #f9ae06, teal #02b4b4 + naranja #f85906) y reemplaza la banda de rombos en el hero (sube desde el borde inferior),
+  el pie, el bloque «Súmate», las tarjetas de proyecto, el portal `/` y las imágenes para compartir. Las bandas horizontales son `src/styles/banda-v3.svg`
+  y `banda-v3-arriba.svg` (la tira girada 90°; Vite las incrusta en el CSS, 0 peticiones). Sigue siendo un motivo derivado del diseño de la universidad:
+  conviene la autorización de Comunicaciones de Uniguajira (pendiente «permiso formal»). Se dibujó solo la mitad visible de la franja (la referencia está
+  cortada en el borde izquierdo). `dist/` reconstruido; verificado en local.
+
 ## 2026-10-07
 
 - **Salida de `dist/` ordenada para el hosting.** Antes la raíz de `dist/` tenía `_astro/`, `images/`, `siis2/`, `favicon.png`,

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="252" viewBox="0 0 64 252">
+
+<g id="coral" fill="none" stroke="#e75e4e" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10">
+  <path d="M-10 81 L33 135 L-2 179 L33 223 L-2 267 L-10 277"/>
+</g>
+<use href="#coral" y="-252"/>
+<g fill="#e75e4e"><path d="M0 117 L13 136 L0 155Z"/><path d="M0 201 L13 220 L0 238Z"/></g>
+<g fill="none" stroke="#f5a536" stroke-width="12" stroke-linejoin="miter" stroke-miterlimit="10"><path d="M41 -2 L-4 58"/><path d="M-4 50 L40 108"/></g>
+<path fill="#f5a536" fill-rule="evenodd" d="M19.5 28 L42 54 L19.5 80 L-3 54 Z M19.5 44 L26 54 L19.5 64 L13 54 Z"/>
+<path fill="#22b4b7" d="M33.5 170 L41 181 L33.5 192 L26 181 Z"/>
+</svg>

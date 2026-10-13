@@ -2,12 +2,12 @@
 //   node scripts/generar-assets.mjs
 // - src/assets/logo/siis2-logo.png        fuente recortada para astro:assets (Astro saca AVIF/WebP bajo /siis2/_astro)
 // - public/siis2/favicon-*.png, apple-touch-icon.png   iconos livianos (recorte del "2" del logo)
-// - public/siis2/images/og/*.png          imagenes 1200x630 para compartir
+// - public/siis2/images/og/*.png          imagenes 1200x630 para compartir (con la banda wayuu V3; correr antes scripts/generar-patrones.mjs)
 import sharp from 'sharp';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 
 const ORIGINAL = 'brand/siis2-logo-colores-original.png';
-const COLOR = { teal: '#02b4b4', rojo: '#d22d17', amarillo: '#f9ae06', naranja: '#f85906', marca: '#a94908', fondo: '#fff3e7', tinta: '#1f1d1b' };
+const COLOR = { naranja: '#f85906', marca: '#a94908', fondo: '#fff3e7', tinta: '#1f1d1b' };
 
 mkdirSync('src/assets/logo', { recursive: true });
 mkdirSync('public/siis2/images/og', { recursive: true });
@@ -57,20 +57,28 @@ await dos().resize(180).png(icono).toFile('public/siis2/apple-touch-icon.png');
 await dos().resize(48).png(icono).toFile('public/siis2/favicon-48.png');
 await dos().resize(32).png(icono).toFile('public/siis2/favicon-32.png');
 
-const banda = (alto) => {
-  const k = alto / 14;
-  const w = 40 * k;
-  return `<pattern id="wy" width="${w}" height="${alto}" patternUnits="userSpaceOnUse"><g transform="scale(${k})">
-<path d="M10 1L19 7L10 13L1 7Z" fill="${COLOR.teal}"/><path d="M10 4.5L13.5 7L10 9.5L6.5 7Z" fill="${COLOR.fondo}"/>
-<path d="M30 1L39 7L30 13L21 7Z" fill="${COLOR.rojo}"/><path d="M30 4.5L33.5 7L30 9.5L26.5 7Z" fill="${COLOR.amarillo}"/></g></pattern>`;
-};
+// La banda del sitio (V3, src/styles/banda-v3*.svg; se regeneran con scripts/generar-patrones.mjs) también remata las imágenes para compartir.
+const ALTO_BANDA = 44;
+async function tiraDeBanda(archivo) {
+  const mosaico = await sharp(readFileSync(archivo), { density: 300 }).resize({ height: ALTO_BANDA }).png().toBuffer();
+  return sharp({ create: { width: 1200, height: ALTO_BANDA, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+    .composite([{ input: mosaico, tile: true, left: 0, top: 0 }])
+    .png()
+    .toBuffer();
+}
+const bandaSuperior = await tiraDeBanda('src/styles/banda-v3.svg'); // borde recto arriba
+const bandaInferior = await tiraDeBanda('src/styles/banda-v3-arriba.svg'); // borde recto abajo
+const bandas = [
+  { input: bandaSuperior, left: 0, top: 0 },
+  { input: bandaInferior, left: 0, top: 630 - ALTO_BANDA },
+];
 
 const FUENTE = "font-family=\"'Segoe UI', Arial, Helvetica, sans-serif\"";
 const lineas = (xs, x, y, size, paso, color, peso) =>
   xs.map((t, i) => `<text x="${x}" y="${y + i * paso}" font-size="${size}" font-weight="${peso}" fill="${color}" ${FUENTE}>${t}</text>`).join('');
 
-const marco = (cuerpo) => `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><defs>${banda(28)}</defs>
-<rect width="1200" height="630" fill="${COLOR.fondo}"/><rect y="0" width="1200" height="28" fill="url(#wy)"/><rect y="602" width="1200" height="28" fill="url(#wy)"/>${cuerpo}</svg>`;
+const marco = (cuerpo) => `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+<rect width="1200" height="630" fill="${COLOR.fondo}"/>${cuerpo}</svg>`;
 
 const logo = await sharp('src/assets/logo/siis2-logo.png').resize({ width: 500 }).toBuffer();
 const logoAlto = (await sharp(logo).metadata()).height;
@@ -81,7 +89,7 @@ const ogSiis2 = marco(
     lineas(['desarrollougmaicao.com/siis2'], 620, 530, 24, 0, COLOR.marca, 600),
 );
 await sharp(Buffer.from(ogSiis2))
-  .composite([{ input: logo, left: 70, top: Math.round((630 - logoAlto) / 2) }])
+  .composite([...bandas, { input: logo, left: 70, top: Math.round((630 - logoAlto) / 2) }])
   .png({ compressionLevel: 9 })
   .toFile('public/siis2/images/og/og-siis2.png');
 
@@ -90,6 +98,6 @@ const ogPortal = marco(
     lineas(['Proyectos de software de la Universidad de La Guajira'], 90, 440, 30, 0, '#5b5955', 400) +
     lineas(['desarrollougmaicao.com'], 90, 500, 26, 0, COLOR.marca, 600),
 );
-await sharp(Buffer.from(ogPortal)).png({ compressionLevel: 9 }).toFile('public/siis2/images/og/og-portal.png');
+await sharp(Buffer.from(ogPortal)).composite(bandas).png({ compressionLevel: 9 }).toFile('public/siis2/images/og/og-portal.png');
 
 console.log('Recursos generados.');
