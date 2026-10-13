@@ -1,0 +1,33 @@
+---
+import Banda from './Banda.astro';
+import DatoPendiente from './DatoPendiente.astro';
+
+// Bloque único para ingresar y contactar. No inventa requisitos, pasos ni canales: cada dato falta hasta que el semillero lo defina.
+const pasos = [
+  { etiqueta: 'Paso 1', texto: 'Por definir' },
+  { etiqueta: 'Paso 2', texto: 'Por definir' },
+  { etiqueta: 'Contacto oficial', texto: 'Por confirmar' },
+];
+---
+
+<section id="sumate" class="scroll-mt-20 bg-brand-50">
+  <Banda />
+  <div class="mx-auto max-w-5xl px-4 py-14 text-center">
+    <p class="font-mono text-xs uppercase tracking-wider text-brand-700">Súmate</p>
+    <h2 class="mt-1 text-3xl font-extrabold text-slate-900 sm:text-4xl">Súmate al semillero</h2>
+    <p class="mx-auto mt-3 max-w-xl text-slate-700">
+      Estamos definiendo el proceso de ingreso. Cuando esté listo, lo publicamos aquí.
+    </p>
+    <div class="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-3">
+      {pasos.map((p) => (
+        <div class="rounded-xl border border-dashed border-slate-400 p-4">
+          <p class="font-mono text-xs text-slate-600">{p.etiqueta}</p>
+          <p class="mt-1.5"><DatoPendiente texto={p.texto} /></p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-slate-700">
+      Mientras tanto, conoce <a class="font-semibold text-brand-700 hover:underline" href="#proyectos">lo que ya construimos</a>.
+    </p>
+  </div>
+</section>

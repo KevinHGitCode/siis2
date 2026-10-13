@@ -46,6 +46,17 @@ En el hosting, `public_html` enlaza `dist/` con **un enlace por cada entrada de 
 generados) va bajo `/siis2/`: `public/siis2/…`, `ASSETS` en `src/consts.ts` y `build.assets: 'siis2/_astro'`. **No pongas carpetas
 nuevas en `public/` ni en la raíz de `dist/`**; cuélgalas de `public/siis2/`. Las URLs de las páginas no cambian.
 
+## Marca y diseño (desde 13 oct 2026)
+
+- **Logo:** siempre con `<Picture>` de `astro:assets` desde `src/assets/logo/siis2-logo.png` (sale como AVIF/WebP bajo `/siis2/_astro/`). Los
+  derivados (logo recortado, iconos, imágenes OG) se regeneran con `node scripts/generar-assets.mjs` a partir de `brand/`. No pongas PNG pesados en `public/`.
+- **Color:** para texto pequeño solo `brand-700/800` (pasan AA). `brand-600` y `wayuu-*` son decorativos. Todo texto nuevo debe dar ≥ 4,5:1.
+- **Banda wayuu:** adorno de marca, no un tejido auténtico; nunca detrás de texto. No presentarla como patrón cultural «oficial».
+- **Movimiento:** solo `opacity`/`transform`, con `prefers-reduced-motion`; sin librerías de animación ni parallax.
+- **Lo que falta se dice con `DatoPendiente`** («Por confirmar», «En definición»); no se rellena con texto genérico ni se inventan fotos, cifras o testimonios.
+- **Fechas visibles** salen de los datos (`fechaConfirmada`, `fechaRegistro`) con `src/lib/fechas.ts`; no usar la fecha del build para datos.
+- **Astro:** en una plantilla, si un texto va justo antes de `{expresión}` en otra línea, el espacio se pierde: déjalos en la misma línea.
+
 ## Comandos
 
 `npm run dev` · `npm run build` · `npm run preview`

@@ -4,6 +4,30 @@ Registro con fecha de las decisiones y cambios de fondo del proyecto. Fecha real
 del hecho cuando se conoce; si no, la fecha en que se confirmó el dato (aclarado
 en cada caso). Ver la regla completa en `CLAUDE.md`.
 
+## 2026-10-13
+
+- Decisión de Kevin: **Sofía va en la página** (sigue listada en `/siis2` como hasta ahora, sin enlace público; las instrucciones sobre ella vienen después) e **Invoritech no va** (no se lista ni se enlaza). No hay cambios de datos ni de build por esta decisión. El `Disallow` de `/invoritech/` en `robots.txt` se mantiene: evita contenido duplicado y es independiente de esta decisión.
+- **Revisión de diseño, bloque 1 (3 correcciones).** (1) Sofía pasa de «Desplegado» + «Enlace pendiente» (contradictorio) a la etiqueta **«Acceso restringido»** con pie «Sin enlace público»; `Proyecto.estado` suma ese valor, `fechaConfirmada: '2026-10-13'`. (2) **Contraste AA:** `brand-700` #d9630d → #a94908 y `brand-800` #b34f0b → #8a3d05 (blanco sobre 700 = 5,76:1; antes 3,66:1); `text-slate-400` → `text-slate-500` donde era texto legible; se quitó `opacity-80` de la tarjeta sin enlace. (3) **`/siis2/logros/colombia-5-0/` queda `noindex, follow`** (prop `noindex` en `BaseLayout`) y fuera del sitemap (`filter` en `astro.config.mjs`) hasta confirmar fecha, categoría, participantes y enlace oficial; sin `Disallow` en robots.txt para que Google pueda ver el noindex. `dist/` reconstruido; verificado en local.
+- **Rediseño con identidad (fases 1–3 de la revisión de diseño).** Resultado de 6 revisiones en paralelo (diseño, aspirante,
+  evaluador institucional, visitante recurrente, lector exigente y viabilidad técnica).
+  - *Peso y compartir:* el logo pasa de PNG a `<Picture>` (AVIF/WebP bajo `/siis2/_astro/`: hero de 200 KB a ~28 KB, header de 66 KB a ~7 KB);
+    favicon de 140 KB a 2 KB (`favicon-32/48.png` + `apple-touch-icon.png`); imágenes 1200×630 por página (`og-siis2.png`, `og-portal.png`)
+    con `og:image:width/height/alt` y `twitter:image`; se quitó una marquita suelta que traía el logo original. Todo lo genera `scripts/generar-assets.mjs`.
+  - *Identidad:* colores reales medidos del logo (`wayuu-teal/red/yellow`, `brand-600` = naranja del logo), titulares en Bricolage Grotesque
+    (~41 KB, autoalojada), banda wayuu en SVG (hero, divisores, remate de tarjetas), animaciones de entrada y de scroll solo con CSS y
+    `prefers-reduced-motion`.
+  - *Contenido con prueba, sin inventar:* ficha del semillero (universidad, programa, docente líder, año y «Grupo de investigación: por confirmar»,
+    con «Datos actualizados el 13 oct 2026» tomado de los datos), «Qué hacemos» (3 hechos confirmados), equipo en fichas con iniciales (sin fotos
+    hasta que haya autorización), proyectos como pósters con su fecha de confirmación, línea de tiempo con las fechas que ya existían
+    (`hitos.ts`; Colombia 5.0 con «Fecha por confirmar» y «Verificación en curso») y un solo bloque «Súmate» que reemplaza las dos cajas
+    «Próximamente» (pasos y contacto marcados «Por definir»/«Por confirmar»). Se quitó el texto visible «Borrador — …».
+  - *Navegación:* botón «Quiero unirme» en el header y el hero, menú móvil con `<details>` (antes en móvil no había navegación) y enlaces del
+    header absolutos a `/siis2/#…`, que ahora también funcionan desde la subpágina de Colombia 5.0.
+  - *Datos estructurados:* `/` con `WebSite`; `/siis2/` con `ResearchOrganization` (logo) y `BreadcrumbList`.
+  - *Corregido:* el artículo de Colombia 5.0 decía «obtuvo el primer lugar», dato que no está confirmado; ahora dice solo que ganó la hackathon.
+  - *Pendiente:* la miniatura de Aura con captura real (datos demo), el RSS y «Últimas novedades» en el portal cuando haya más de un hito con fecha,
+    y las fotos del equipo (con consentimiento). `dist/` reconstruido; verificado en local (escritorio y móvil).
+
 ## 2026-10-07
 
 - **Salida de `dist/` ordenada para el hosting.** Antes la raíz de `dist/` tenía `_astro/`, `images/`, `siis2/`, `favicon.png`,

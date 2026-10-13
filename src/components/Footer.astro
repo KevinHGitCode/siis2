@@ -1,14 +1,16 @@
 ---
 import { SEMILLERO } from '../data/semillero';
 import { PROYECTOS } from '../data/proyectos';
+import Banda from './Banda.astro';
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="mt-24 border-t border-slate-200 bg-slate-50">
+<footer class="bg-slate-50">
+  <Banda />
   <div class="mx-auto grid max-w-5xl gap-8 px-4 py-12 sm:grid-cols-3">
     <div>
-      <p class="font-bold text-slate-900">{SEMILLERO.nombreCorto}</p>
+      <p class="font-marca text-lg font-extrabold text-slate-900">{SEMILLERO.nombreCorto}</p>
       <p class="mt-2 text-sm text-slate-600">{SEMILLERO.nombreLargo}</p>
       <p class="mt-1 text-sm text-slate-600">{SEMILLERO.programa} · Sede {SEMILLERO.sede}</p>
     </div>
@@ -20,7 +22,7 @@ const year = new Date().getFullYear();
             {p.href ? (
               <a class="transition hover:text-brand-700" href={p.href}>{p.nombre}</a>
             ) : (
-              <span class="text-slate-400">{p.nombre}</span>
+              <span class="text-slate-600">{p.nombre} · acceso restringido</span>
             )}
           </li>
         ))}
@@ -34,10 +36,11 @@ const year = new Date().getFullYear();
             {SEMILLERO.universidad}
           </a>
         </li>
+        <li><a class="transition hover:text-brand-700" href="/">Desarrollo Uniguajira Maicao</a></li>
       </ul>
     </div>
   </div>
-  <div class="border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+  <div class="border-t border-slate-200 py-4 text-center text-xs text-slate-600">
     © {year} {SEMILLERO.nombreCorto} — {SEMILLERO.universidad}
   </div>
 </footer>

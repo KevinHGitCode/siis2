@@ -2,27 +2,41 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
+import Banda from '../../../components/Banda.astro';
+import DatoPendiente from '../../../components/DatoPendiente.astro';
 
 const title = 'Ganadores de la hackathon en Colombia 5.0 — SIIS2';
 const description =
   'El semillero SIIS2 de la Universidad de La Guajira participó en Colombia 5.0 y ganó la hackathon.';
+
+// Datos que faltan para publicar el artículo completo (no se inventan).
+const pendientes = ['Fecha exacta', 'Categoría', 'Reto resuelto', 'Integrantes que participaron', 'Enlace oficial a los resultados', 'Fotos con autorización'];
 ---
 
-<BaseLayout title={title} description={description}>
+{/* noindex: borrador sin datos confirmados; quitar noindex y el filtro del sitemap al confirmar fecha, categoría, participantes y enlace oficial. */}
+<BaseLayout title={title} description={description} noindex>
   <Header />
-  <article class="mx-auto max-w-3xl px-4 py-16">
-    <a href="/siis2#logros" class="text-sm font-medium text-brand-700 hover:underline">← Volver a logros</a>
-    <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-      Ganadores de la hackathon en Colombia 5.0
-    </h1>
-    <p class="mt-6 text-slate-600">
-      El equipo del semillero <strong>SIIS2</strong> participó en el evento <strong>Colombia 5.0</strong>
-      y obtuvo el primer lugar en la hackathon.
-    </p>
-    <p class="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 text-sm text-slate-500">
-      Borrador. Pendiente de confirmar con el semillero: fecha exacta, categoría, reto resuelto,
-      integrantes que participaron, enlace a los resultados oficiales y fotos con autorización.
-    </p>
-  </article>
+  <main>
+    <section class="bg-brand-50">
+      <div class="mx-auto max-w-3xl px-4 pb-10 pt-12">
+        <a href="/siis2/#logros" class="text-sm font-semibold text-brand-700 hover:underline">← Volver a logros e hitos</a>
+        <h1 class="mt-4 text-4xl font-extrabold text-slate-900 sm:text-5xl">Ganadores de la hackathon en Colombia 5.0</h1>
+        <p class="mt-4 text-lg text-slate-700">
+          El equipo del semillero <strong>SIIS2</strong> participó en el evento <strong>Colombia 5.0</strong> y ganó la hackathon.
+        </p>
+      </div>
+      <Banda />
+    </section>
+
+    <article class="mx-auto max-w-3xl px-4 py-12">
+      <h2 class="text-2xl font-extrabold text-slate-900">Qué falta para contar la historia completa</h2>
+      <p class="mt-2 text-slate-700">
+        Este artículo está en verificación. Cuando el semillero confirme estos datos, se publica completo.
+      </p>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {pendientes.map((p) => <li><DatoPendiente texto={p} /></li>)}
+      </ul>
+    </article>
+  </main>
   <Footer />
 </BaseLayout>

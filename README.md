@@ -19,7 +19,7 @@ cada año. Separado, además, `/` puede posicionar por el término genérico del
 
 - **Astro** (estático) + **Tailwind CSS v4** (vía `@tailwindcss/vite`)
 - `@astrojs/sitemap` para `sitemap-index.xml`, `@astrojs/mdx` para artículos
-- Mismo enfoque que el blog personal (`C:\Projects\Blog\blog`)
+- Mismo enfoque que el blog personal (`C:\Projects\repos\Blog\blog`)
 
 ## Comandos
 
@@ -31,7 +31,7 @@ npm run preview
 ```
 
 > Si `npm install` falla por versiones, alinea `package.json` con las del blog
-> (`C:\Projects\Blog\blog\package.json`).
+> (`C:\Projects\repos\Blog\blog\package.json`).
 
 ## Despliegue (hosting compartido — confirmado 13 sept 2026)
 
@@ -45,7 +45,7 @@ de `dist/` (se versiona a propósito) y en el servidor solo se hace `git pull`. 
 `~/domains/desarrollougmaicao.com/siis2-web`, **fuera** de `public_html`, y `public_html` lo enlaza:
 
 ```
-public_html/siis2          -> ../siis2-web/dist/siis2      (carpeta: páginas de /siis2/… + _astro/ + images/ + favicon.png)
+public_html/siis2          -> ../siis2-web/dist/siis2      (carpeta: páginas de /siis2/… + _astro/ + images/ + iconos)
 public_html/index.html     -> ../siis2-web/dist/index.html (el portal de /)
 public_html/robots.txt     -> ../siis2-web/dist/robots.txt
 public_html/sitemap-*.xml  -> ../siis2-web/dist/sitemap-*.xml
@@ -53,7 +53,7 @@ public_html/sitemap-*.xml  -> ../siis2-web/dist/sitemap-*.xml
 
 Solo `siis2` es una carpeta. Lo demás son archivos que tienen que estar en la raíz del dominio (portal, robots y sitemap).
 Por eso **todo lo estático que no es una página cuelga de `/siis2/`**: `/siis2/_astro/` (JS/CSS generados, ver
-`build.assets` en `astro.config.mjs`), `/siis2/images/` y `/siis2/favicon.png` (viven en `public/siis2/`; el prefijo está en
+`build.assets` en `astro.config.mjs`), `/siis2/images/og/` y los iconos `/siis2/favicon-*.png` y `/siis2/apple-touch-icon.png` (viven en `public/siis2/`; el prefijo está en
 `src/consts.ts`). Las páginas siguen en `/` y `/siis2/…`. Sin esto, cada carpeta de `dist/` (`_astro`, `images`…) pedía su
 propio enlace en `public_html`, y un panel que lea `public_html` las tomaba por subdominios.
 
@@ -72,20 +72,24 @@ raíz, también quedan visibles en `desarrollougmaicao.com/asistencia` y `.../in
 
 ## Marca
 
-Logo real de SIIS2 cargado el 2026-09-13 desde `Asistencia-Uniguajira/public/images/`.
+Logo real de SIIS2 cargado el 2026-09-13 desde `Asistencia-Uniguajira/public/images/`; rediseño con identidad el 2026-10-13.
 
-- `brand/siis2-logo-*-original.png` — archivos fuente sin tocar (6000×3375, ~5–7MB c/u).
-  No se sirven en la web, quedan como archivo.
-- `public/images/logo/siis2-logo-{colores,blanco,negro}.png` — versiones recortadas
-  (sin el margen transparente) y reducidas (640px de ancho) para uso en el sitio.
-- `public/images/logo/siis2-logo-colores-header.png` — versión más chica (320px) para
-  el header.
-- `public/favicon.png` — favicon generado a partir de la versión a color.
-- La paleta `brand-*` en `src/styles/global.css` sale del naranja del logo (ya no es el
-  azul provisional).
-
-Para regenerar las versiones web si llega un logo nuevo, usar `sharp` (ya es dependencia):
-`trim()` + `resize({ width: 640 })` + `png({ compressionLevel: 9 })`.
+- `brand/siis2-logo-*-original.png` — archivos fuente sin tocar (6000×3375, ~5–7 MB c/u). No se sirven en la web.
+- `scripts/generar-assets.mjs` (`node scripts/generar-assets.mjs`) — genera, a partir del original a color, todo lo derivado:
+  `src/assets/logo/siis2-logo.png` (recortado, 1280 px; se quita una marquita suelta del original),
+  los iconos `public/siis2/favicon-32.png`, `favicon-48.png` y `apple-touch-icon.png` (recorte del «2»)
+  y las imágenes para compartir `public/siis2/images/og/og-siis2.png` y `og-portal.png` (1200×630).
+- El logo se usa **siempre con `<Picture>` de `astro:assets`** desde `src/assets/logo/siis2-logo.png`: Astro saca AVIF/WebP
+  (el del hero baja de 200 KB a ~28 KB) bajo `/siis2/_astro/`, que respeta la estructura de `dist/`. No pongas el PNG en `public/`.
+- Colores del logo (medidos con sharp): naranja `#f85906`, teal `#02b4b4`, rojo `#d22d17`, amarillo `#f9ae06`
+  → `brand-*` y `wayuu-*` en `src/styles/global.css` (solo `brand-700/800` sirven para texto: pasan AA).
+- Tipografía de titulares: **Bricolage Grotesque** (paquete `@fontsource-variable/bricolage-grotesque`, solo subconjunto latin,
+  ~41 KB, con `preload`). El cuerpo usa la fuente del sistema.
+- **Banda wayuu** (`.banda-wayuu`, componente `Banda.astro`): rombos teal/rojo/amarillo inspirados en el «2» del logo, SVG
+  embebido en el CSS. Es un adorno de la marca, **no** una reproducción de un tejido: se usa en el hero, como divisor y en el
+  remate de tarjetas, nunca detrás de texto.
+- Movimiento: solo `opacity`/`transform`, con `prefers-reduced-motion`. `.entra` (carga) y `.revela` (al hacer scroll, CSS puro
+  con `animation-timeline: view()`; sin soporte, p. ej. Firefox, el contenido se ve completo).
 
 ## Dónde está el contenido
 
@@ -97,10 +101,14 @@ Todo el texto editable vive en `src/data/`:
 | `integrantes.ts` | Los 4 integrantes (nombres públicos autorizados). |
 | `proyectos.ts` | Aura («asistencia uniguajira») y Sofía («inventario uniguajira»). ⚠️ Confirmar `href` real. |
 | `logros.ts` | Hackathon Colombia 5.0 → artículo en `src/pages/siis2/logros/`. |
+| `hitos.ts` | Línea de tiempo de `/siis2` (fundación, Aura en vivo + los logros de `logros.ts`). Sin fecha = «Fecha por confirmar». |
+| `pilares.ts` | Las 3 tarjetas de «Qué hacemos» (solo hechos confirmados). |
 
 `src/pages/index.astro` (el portal) arma su directorio a partir de `SEMILLERO` y `PROYECTOS` — no
 duplicar esos datos ahí. El diseño de `/siis2` se arma componiendo secciones en
-`src/pages/siis2/index.astro` con los componentes de `src/components/`.
+`src/pages/siis2/index.astro` con los componentes de `src/components/` (`Ficha`, `Timeline`, `Sumate`, `ProjectCard`,
+`PersonCard`, `Banda`, `DatoPendiente`, `Icono`…). Lo que falta por confirmar se muestra con el sello `DatoPendiente`
+(«Por confirmar», «En definición»…), nunca con texto inventado.
 
 ## Pendiente (documento para el prof. Carlos Deluquez)
 

@@ -1,28 +1,40 @@
 ---
 import type { Proyecto } from '../data/proyectos';
+import { formatearFecha } from '../lib/fechas';
+import Banda from './Banda.astro';
+import Icono from './Icono.astro';
 
 const { proyecto } = Astro.props as { proyecto: Proyecto };
 const Tag = proyecto.href ? 'a' : 'div';
+const etiqueta = proyecto.estado === 'Desplegado' ? 'En vivo' : proyecto.estado;
 ---
 
 <Tag
   href={proyecto.href}
   class:list={[
-    'group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition',
-    proyecto.href ? 'hover:border-brand-100 hover:shadow-lg' : 'opacity-80',
+    'revela group flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition',
+    proyecto.href ? 'bg-white hover:shadow-lg motion-safe:hover:-translate-y-1' : 'bg-slate-50',
   ]}
 >
-  <div class="flex items-center justify-between gap-3">
-    <h3 class="text-lg font-semibold text-slate-900">{proyecto.nombre}</h3>
-    <span class="shrink-0 rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700">
-      {proyecto.estado}
-    </span>
+  <div
+    class:list={[
+      'flex h-20 items-center justify-between px-5',
+      proyecto.href ? 'bg-brand-50 text-brand-700' : 'bg-slate-100 text-slate-700',
+    ]}
+  >
+    <Icono nombre={proyecto.icono ?? 'codigo'} class="h-10 w-10" />
+    <span class="rounded-md border border-current bg-white px-2 py-0.5 font-mono text-xs">{etiqueta}</span>
   </div>
-  <p class="mt-1 text-sm text-slate-500">«{proyecto.alias}»</p>
-  <p class="mt-3 flex-1 text-sm text-slate-600">{proyecto.descripcion}</p>
-  {proyecto.href ? (
-    <span class="mt-4 text-sm font-medium text-brand-700 group-hover:underline">Ver proyecto →</span>
-  ) : (
-    <span class="mt-4 text-sm font-medium text-slate-400">Enlace pendiente</span>
-  )}
+  <Banda fina />
+  <div class="flex flex-1 flex-col p-5">
+    <h3 class="text-2xl font-extrabold text-slate-900">{proyecto.nombre}</h3>
+    <p class="mt-1 font-mono text-xs text-slate-600">«{proyecto.alias}»</p>
+    <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-700">{proyecto.descripcion}</p>
+    {proyecto.href ? (
+      <span class="mt-4 text-sm font-semibold text-brand-700 group-hover:underline">Ver proyecto →</span>
+    ) : (
+      <span class="mt-4 text-sm font-semibold text-slate-700">Sin enlace público</span>
+    )}
+    <p class="mt-3 font-mono text-xs text-slate-600">Confirmado el {formatearFecha(proyecto.fechaConfirmada)}</p>
+  </div>
 </Tag>

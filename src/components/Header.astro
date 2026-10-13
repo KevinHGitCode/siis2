@@ -1,33 +1,63 @@
 ---
+import { Picture } from 'astro:assets';
+import logo from '../assets/logo/siis2-logo.png';
 import { SEMILLERO } from '../data/semillero';
-import { ASSETS } from '../consts';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-
+// Enlaces absolutos a /siis2/ para que sirvan también desde las subpáginas (p. ej. /siis2/logros/...).
+const inicio = '/siis2/';
 const links = [
-  { href: '#que-es', label: 'Qué es' },
-  { href: '#integrantes', label: 'Integrantes' },
-  { href: '#proyectos', label: 'Proyectos' },
-  { href: '#logros', label: 'Logros' },
-  { href: '#contacto', label: 'Contacto' },
+  { href: `${inicio}#que-hacemos`, label: 'Qué hacemos' },
+  { href: `${inicio}#equipo`, label: 'Equipo' },
+  { href: `${inicio}#proyectos`, label: 'Proyectos' },
+  { href: `${inicio}#logros`, label: 'Logros' },
 ];
+const unirse = `${inicio}#sumate`;
 ---
 
 <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
-  <nav class="mx-auto flex max-w-5xl items-center justify-between px-4 py-2">
-    <a href="#top" class="flex items-center gap-2">
-      <img
-        src={`${base}${ASSETS}/images/logo/siis2-logo-colores-header.png`}
+  <nav class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-2" aria-label="Principal">
+    <a href={inicio} class="flex shrink-0 items-center">
+      <Picture
+        src={logo}
+        formats={['avif']}
+        fallbackFormat="webp"
+        widths={[75, 150, 225]}
+        sizes="75px"
+        width={75}
         alt={SEMILLERO.nombreCorto}
         class="h-9 w-auto"
-        width="320"
-        height="161"
+        loading="eager"
       />
     </a>
-    <ul class="hidden gap-6 text-sm font-medium text-slate-600 sm:flex">
+
+    <ul class="hidden items-center gap-6 text-sm font-medium text-slate-700 sm:flex">
       {links.map((l) => (
         <li><a class="transition hover:text-brand-700" href={l.href}>{l.label}</a></li>
       ))}
+      <li>
+        <a class="rounded-lg bg-brand-700 px-4 py-2 text-white transition hover:bg-brand-800" href={unirse}>Quiero unirme</a>
+      </li>
     </ul>
+
+    <details class="relative sm:hidden" id="menu-movil">
+      <summary class="flex cursor-pointer list-none items-center rounded-lg border border-slate-300 p-2 text-slate-700" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </summary>
+      <ul class="absolute right-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-2 text-sm font-medium text-slate-700 shadow-lg">
+        {links.map((l) => (
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-slate-50" href={l.href}>{l.label}</a></li>
+        ))}
+        <li>
+          <a class="mt-1 block rounded-lg bg-brand-700 px-3 py-2 text-center text-white" href={unirse}>Quiero unirme</a>
+        </li>
+      </ul>
+    </details>
   </nav>
 </header>
+
+<script>
+  const menu = document.getElementById('menu-movil');
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => menu.removeAttribute('open')));
+</script>

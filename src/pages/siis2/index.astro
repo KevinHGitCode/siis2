@@ -1,92 +1,130 @@
 ---
+import { Picture } from 'astro:assets';
+import logo from '../../assets/logo/siis2-logo.png';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Section from '../../components/Section.astro';
+import Banda from '../../components/Banda.astro';
+import Ficha from '../../components/Ficha.astro';
+import Icono from '../../components/Icono.astro';
+import DatoPendiente from '../../components/DatoPendiente.astro';
+import PersonCard from '../../components/PersonCard.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import AchievementCard from '../../components/AchievementCard.astro';
-import ComingSoon from '../../components/ComingSoon.astro';
+import Timeline from '../../components/Timeline.astro';
+import Sumate from '../../components/Sumate.astro';
 import { SEMILLERO } from '../../data/semillero';
 import { INTEGRANTES } from '../../data/integrantes';
 import { PROYECTOS } from '../../data/proyectos';
-import { LOGROS } from '../../data/logros';
-import { ASSETS } from '../../consts';
+import { PILARES } from '../../data/pilares';
+import { SITIO, schemaMigas, schemaSemillero } from '../../lib/schema';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = `${SITIO}/siis2/`;
+const schema = [
+  schemaSemillero(canonical),
+  schemaMigas([
+    { nombre: 'Desarrollo Uniguajira Maicao', url: `${SITIO}/` },
+    { nombre: SEMILLERO.nombreCorto, url: canonical },
+  ]),
+];
+
+const colorPilar = {
+  marca: 'bg-brand-700 text-white',
+  teal: 'bg-wayuu-teal text-slate-900',
+  rojo: 'bg-wayuu-red text-white',
+};
+const inicialesDocente = SEMILLERO.docenteLider
+  .split(' ')
+  .map((n) => n[0])
+  .slice(0, 2)
+  .join('');
 ---
 
-<BaseLayout>
-  <span id="top"></span>
+<BaseLayout schema={schema}>
   <Header />
 
-  <!-- Hero -->
-  <section class="mx-auto max-w-5xl px-4 pb-8 pt-16 text-center">
-    <img
-      src={`${base}${ASSETS}/images/logo/siis2-logo-colores.png`}
-      alt={SEMILLERO.nombreLargo}
-      class="mx-auto h-28 w-auto sm:h-36"
-      width="640"
-      height="323"
-    />
-    <p class="mt-6 text-sm font-semibold uppercase tracking-wider text-brand-700">
-      {SEMILLERO.programa} · {SEMILLERO.universidad} · Sede {SEMILLERO.sede}
-    </p>
-    <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-      {SEMILLERO.nombreLargo}
-    </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600">{SEMILLERO.descripcionCorta}</p>
-    <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href="#proyectos" class="rounded-xl bg-brand-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-800">
-        Ver proyectos
-      </a>
-      <a href="#que-es" class="rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-        Conocer el semillero
-      </a>
-    </div>
-  </section>
+  <main>
+    <section class="bg-brand-50">
+      <div class="mx-auto max-w-5xl px-4 pb-12 pt-12 text-center">
+        <Picture
+          src={logo}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[240, 480, 720]}
+          sizes="(min-width: 640px) 288px, 240px"
+          width={288}
+          alt={SEMILLERO.nombreLargo}
+          loading="eager"
+          fetchpriority="high"
+          class="entra mx-auto h-auto w-60 sm:w-72"
+        />
+        <p class="entra entra-2 mt-6 font-mono text-xs uppercase tracking-wider text-brand-700">
+          {SEMILLERO.programa} · {SEMILLERO.universidad} · Sede {SEMILLERO.sede}
+        </p>
+        <h1 class="entra entra-2 mx-auto mt-3 max-w-3xl text-4xl font-extrabold text-slate-900 sm:text-6xl">
+          {SEMILLERO.nombreLargo}
+        </h1>
+        <p class="entra entra-3 mx-auto mt-5 max-w-2xl text-lg text-slate-700">{SEMILLERO.descripcionCorta}</p>
+        <div class="entra entra-3 mt-8 flex flex-wrap justify-center gap-3">
+          <a href="#sumate" class="rounded-xl bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800">
+            Quiero unirme
+          </a>
+          <a href="#proyectos" class="rounded-xl border border-slate-400 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-50">
+            Ver proyectos
+          </a>
+        </div>
+      </div>
+      <Banda />
+    </section>
 
-  <!-- Qué es -->
-  <Section id="que-es" titulo="Qué es el semillero">
-    <p class="max-w-3xl text-slate-600">
-      {SEMILLERO.nombreCorto} es un semillero de investigación del programa de {SEMILLERO.programa} de la {SEMILLERO.universidad} (sede {SEMILLERO.sede}), fundado en {SEMILLERO.fundacion}.
-      Reúne a estudiantes que construyen software aplicado a problemas reales de la universidad y la región.
-    </p>
-    <p class="mt-3 max-w-3xl text-sm text-slate-400">
-      Borrador — la misión, la visión y las líneas de investigación oficiales se publicarán cuando el semillero las defina.
-    </p>
-  </Section>
+    <Section id="ficha" etiqueta="De un vistazo" titulo="Ficha del semillero">
+      <Ficha />
+    </Section>
 
-  <!-- Integrantes -->
-  <Section id="integrantes" titulo="Integrantes">
-    <p class="max-w-3xl text-slate-600">
-      Este semillero está dirigido por <span class="font-medium text-slate-700">{SEMILLERO.docenteLider}</span>.
-      Estudiantes pertenecientes al semillero de investigación de Ingeniería de Sistemas son los siguientes: {INTEGRANTES.map((i) => i.nombre).join(', ')}.
-    </p>
-  </Section>
+    <Section id="que-hacemos" etiqueta="Qué hacemos" titulo="Construimos software para nuestra universidad">
+      <div class="grid gap-4 sm:grid-cols-3">
+        {PILARES.map((p) => (
+          <div class="revela rounded-2xl border border-slate-200 bg-white p-5">
+            <span class:list={['flex h-11 w-11 items-center justify-center rounded-xl', colorPilar[p.color]]}>
+              <Icono nombre={p.icono} class="h-6 w-6" />
+            </span>
+            <h3 class="mt-4 text-xl font-extrabold text-slate-900">{p.titulo}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-slate-700">{p.texto}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-5 flex flex-wrap items-center gap-2 text-sm text-slate-700">
+        Misión, visión y líneas de investigación: <DatoPendiente texto="En definición" />
+      </p>
+    </Section>
 
-  <!-- Proyectos -->
-  <Section id="proyectos" titulo="Proyectos">
-    <div class="grid gap-6 sm:grid-cols-2">
-      {PROYECTOS.map((p) => <ProjectCard proyecto={p} />)}
-    </div>
-  </Section>
+    <Section id="equipo" etiqueta="Equipo" titulo="Las personas del semillero">
+      <div class="revela mb-4 flex items-center gap-4 rounded-2xl bg-brand-50 p-5">
+        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-700 font-marca text-lg font-extrabold text-white" aria-hidden="true">
+          {inicialesDocente}
+        </div>
+        <div>
+          <p class="font-mono text-xs uppercase tracking-wider text-brand-700">Docente líder</p>
+          <p class="text-xl font-extrabold text-slate-900">{SEMILLERO.docenteLider}</p>
+        </div>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {INTEGRANTES.map((i, n) => <PersonCard integrante={i} indice={n} />)}
+      </div>
+    </Section>
 
-  <!-- Logros -->
-  <Section id="logros" titulo="Logros">
-    <div class="grid gap-6 sm:grid-cols-2">
-      {LOGROS.map((l) => <AchievementCard logro={l} />)}
-    </div>
-  </Section>
+    <Section id="proyectos" etiqueta="Proyectos" titulo="Lo que hemos construido">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {PROYECTOS.map((p) => <ProjectCard proyecto={p} />)}
+      </div>
+    </Section>
 
-  <!-- Cómo ingresar -->
-  <Section id="ingresar" titulo="Cómo ingresar">
-    <ComingSoon nota="Requisitos y convocatoria para nuevos integrantes. Pendiente de definir con el semillero." />
-  </Section>
+    <Section id="logros" etiqueta="Logros e hitos" titulo="Nuestro recorrido">
+      <Timeline />
+    </Section>
 
-  <!-- Contacto -->
-  <Section id="contacto" titulo="Contacto">
-    <ComingSoon nota="Correo oficial y formulario de contacto. Pendiente de definir con el semillero." />
-  </Section>
+    <Sumate />
+  </main>
 
   <Footer />
 </BaseLayout>

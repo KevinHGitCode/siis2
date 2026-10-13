@@ -15,7 +15,10 @@ export default defineConfig({
   site: 'https://desarrollougmaicao.com',
   trailingSlash: 'ignore',
   build: { assets: 'siis2/_astro' }, // los JS/CSS generados salen en dist/siis2/_astro y se piden como /siis2/_astro/...
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap({
+      // Borrador sin datos confirmados: fuera del sitemap mientras tenga noindex (quitar este filtro al confirmarlo).
+      filter: (page) => !page.includes('/siis2/logros/colombia-5-0'),
+    })],
   vite: {
     plugins: [tailwindcss()],
   },

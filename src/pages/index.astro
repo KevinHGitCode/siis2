@@ -1,92 +1,125 @@
 ---
+import { Picture } from 'astro:assets';
+import logo from '../assets/logo/siis2-logo.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Banda from '../components/Banda.astro';
+import Icono from '../components/Icono.astro';
 import { SEMILLERO } from '../data/semillero';
 import { PROYECTOS } from '../data/proyectos';
-import { ASSETS } from '../consts';
-
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+import { SITIO } from '../lib/schema';
+import { formatearFecha } from '../lib/fechas';
 
 const title = 'Desarrollo Uniguajira Maicao — proyectos de software de la Universidad de La Guajira';
 const description =
   'Portal de proyectos de software desarrollados en la sede Maicao de la Universidad de La Guajira: el semillero SIIS2 y sus aplicaciones.';
 
-// Directorio de lo que vive en este dominio. Cada entrada es una apuesta de la red:
-// enlaza hacia su propia página (con su propio SEO) y esa página enlaza de vuelta aquí.
+const schema = [
+  {
+    '@type': 'WebSite',
+    '@id': `${SITIO}/#sitio`,
+    name: 'Desarrollo Uniguajira Maicao',
+    url: `${SITIO}/`,
+    inLanguage: 'es',
+    description,
+  },
+];
+
+// Directorio de lo que vive en este dominio. Cada entrada enlaza a su propia página (con su propio SEO)
+// y esa página enlaza de vuelta aquí.
 const destinos = [
   {
     nombre: SEMILLERO.nombreCorto,
     titulo: SEMILLERO.nombreLargo,
     descripcion: SEMILLERO.descripcionCorta,
-    href: '/siis2',
+    href: '/siis2/',
     etiqueta: 'Semillero de investigación',
-    logo: `${base}${ASSETS}/images/logo/siis2-logo-colores-header.png`,
+    pie: `Fundado en ${SEMILLERO.fundacion}`,
+    logo: true,
+    icono: undefined,
   },
   ...PROYECTOS.map((p) => ({
     nombre: p.nombre,
-    titulo: `${p.nombre} — «${p.alias}»`,
+    titulo: `«${p.alias}»`,
     descripcion: p.descripcion,
     href: p.href,
-    etiqueta: p.estado,
+    etiqueta: p.estado === 'Desplegado' ? 'En vivo' : p.estado,
+    pie: `Confirmado el ${formatearFecha(p.fechaConfirmada)}`,
+    logo: false,
+    icono: p.icono ?? 'codigo',
   })),
 ];
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} ogImage="og-portal.png" ogAlt="Desarrollo Uniguajira Maicao" schema={schema}>
   <header class="border-b border-slate-200">
     <div class="mx-auto max-w-5xl px-4 py-4">
-      <span class="font-bold tracking-tight text-slate-900">Desarrollo Uniguajira Maicao</span>
+      <span class="font-marca text-lg font-extrabold tracking-tight text-slate-900">Desarrollo Uniguajira Maicao</span>
     </div>
   </header>
 
-  <section class="mx-auto max-w-5xl px-4 pb-8 pt-16 text-center">
-    <p class="text-sm font-semibold uppercase tracking-wider text-brand-700">
-      Universidad de La Guajira · Sede Maicao
-    </p>
-    <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-      Proyectos de software hechos en Maicao
-    </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
-      Software construido por estudiantes de Ingeniería de Sistemas de la sede Maicao: el semillero
-      de investigación {SEMILLERO.nombreCorto} y las aplicaciones que ha impulsado.
-    </p>
-  </section>
+  <main>
+    <section class="bg-brand-50">
+      <div class="mx-auto max-w-5xl px-4 pb-12 pt-14 text-center">
+        <p class="entra font-mono text-xs uppercase tracking-wider text-brand-700">Universidad de La Guajira · Sede Maicao</p>
+        <h1 class="entra entra-2 mx-auto mt-3 max-w-3xl text-4xl font-extrabold text-slate-900 sm:text-6xl">
+          Proyectos de software hechos en Maicao
+        </h1>
+        <p class="entra entra-3 mx-auto mt-5 max-w-2xl text-lg text-slate-700">
+          Software construido por estudiantes de Ingeniería de Sistemas de la sede Maicao: el semillero de investigación {SEMILLERO.nombreCorto} y las aplicaciones que ha impulsado.
+        </p>
+      </div>
+      <Banda />
+    </section>
 
-  <section class="mx-auto max-w-5xl px-4 pb-24">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {destinos.map((d) => {
-        const Tag = d.href ? 'a' : 'div';
-        return (
-          <Tag
-            href={d.href}
-            class:list={[
-              'group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition',
-              d.href ? 'hover:border-brand-100 hover:shadow-lg' : 'opacity-80',
-            ]}
-          >
-            <div class="flex items-center justify-between gap-3">
-              {d.logo ? (
-                <img src={d.logo} alt={d.nombre} class="h-6 w-auto" />
+    <section class="mx-auto max-w-5xl px-4 py-14">
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {destinos.map((d) => {
+          const Tag = d.href ? 'a' : 'div';
+          return (
+            <Tag
+              href={d.href}
+              class:list={[
+                'revela group flex flex-col rounded-2xl border border-slate-200 p-6 transition',
+                d.href ? 'bg-white hover:shadow-lg motion-safe:hover:-translate-y-1' : 'bg-slate-50',
+              ]}
+            >
+              <div class="flex items-center justify-between gap-3">
+                {d.logo ? (
+                  <Picture
+                    src={logo}
+                    formats={['avif']}
+                    fallbackFormat="webp"
+                    widths={[62, 124, 186]}
+                    sizes="62px"
+                    width={62}
+                    alt={d.nombre}
+                    class="h-8 w-auto"
+                  />
+                ) : (
+                  <span class:list={['flex h-10 w-10 items-center justify-center rounded-xl', d.href ? 'bg-brand-50 text-brand-700' : 'bg-slate-100 text-slate-700']}>
+                    <Icono nombre={d.icono ?? 'codigo'} class="h-6 w-6" />
+                  </span>
+                )}
+                <span class="shrink-0 rounded-md border border-current px-2 py-0.5 font-mono text-xs text-brand-700">{d.etiqueta}</span>
+              </div>
+              <h2 class="mt-4 text-2xl font-extrabold text-slate-900">{d.nombre}</h2>
+              <p class="mt-1 text-sm text-slate-600">{d.titulo}</p>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-700">{d.descripcion}</p>
+              {d.href ? (
+                <span class="mt-4 text-sm font-semibold text-brand-700 group-hover:underline">Ver →</span>
               ) : (
-                <h2 class="text-lg font-semibold text-slate-900">{d.nombre}</h2>
+                <span class="mt-4 text-sm font-semibold text-slate-700">Sin enlace público</span>
               )}
-              <span class="shrink-0 rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-700">
-                {d.etiqueta}
-              </span>
-            </div>
-            <p class="mt-1 text-sm text-slate-500">{d.titulo}</p>
-            <p class="mt-3 flex-1 text-sm text-slate-600">{d.descripcion}</p>
-            {d.href ? (
-              <span class="mt-4 text-sm font-medium text-brand-700 group-hover:underline">Ver →</span>
-            ) : (
-              <span class="mt-4 text-sm font-medium text-slate-400">Enlace pendiente</span>
-            )}
-          </Tag>
-        );
-      })}
-    </div>
-  </section>
+              <p class="mt-3 font-mono text-xs text-slate-600">{d.pie}</p>
+            </Tag>
+          );
+        })}
+      </div>
+    </section>
+  </main>
 
-  <footer class="border-t border-slate-200 bg-slate-50 py-6 text-center text-xs text-slate-500">
-    © {new Date().getFullYear()} {SEMILLERO.universidad} — Sede Maicao
+  <footer class="bg-slate-50">
+    <Banda />
+    <p class="py-6 text-center text-xs text-slate-600">© {new Date().getFullYear()} {SEMILLERO.universidad} — Sede Maicao</p>
   </footer>
 </BaseLayout>

@@ -2,12 +2,14 @@
 interface Props {
   id: string;
   titulo: string;
+  etiqueta?: string;
 }
 
-const { id, titulo } = Astro.props;
+const { id, titulo, etiqueta } = Astro.props;
 ---
 
-<section id={id} class="mx-auto max-w-5xl scroll-mt-20 px-4 py-16">
-  <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{titulo}</h2>
+<section id={id} class="mx-auto max-w-5xl scroll-mt-20 px-4 py-14">
+  {etiqueta && <p class="font-mono text-xs uppercase tracking-wider text-brand-700">{etiqueta}</p>}
+  <h2 class="mt-1 text-3xl font-extrabold text-slate-900 sm:text-4xl">{titulo}</h2>
   <div class="mt-8"><slot /></div>
 </section>

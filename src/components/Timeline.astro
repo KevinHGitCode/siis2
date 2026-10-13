@@ -1,0 +1,33 @@
+---
+import { HITOS } from '../data/hitos';
+import { formatearFecha } from '../lib/fechas';
+import DatoPendiente from './DatoPendiente.astro';
+
+// Primero los que tienen fecha (de más antiguo a más reciente) y al final los que aún no la tienen.
+const ordenados = [...HITOS].sort((a, b) => (a.fecha ?? '9999').localeCompare(b.fecha ?? '9999'));
+---
+
+<ol class="ml-2 border-l-2 border-slate-200 pl-6">
+  {ordenados.map((h) => (
+    <li class="revela relative pb-8 last:pb-0">
+      <span
+        class:list={[
+          'absolute -left-[33px] top-1.5 h-3.5 w-3.5 rounded-full border-2',
+          h.fecha ? 'border-white bg-brand-700' : 'border-dashed border-slate-500 bg-white',
+        ]}
+        aria-hidden="true"
+      ></span>
+      <p class="font-mono text-xs text-slate-600">
+        {h.fecha
+          ? h.fechaEsDeConfirmacion
+            ? `Confirmado el ${formatearFecha(h.fecha)}`
+            : formatearFecha(h.fecha)
+          : 'Fecha por confirmar'}
+      </p>
+      <h3 class="mt-0.5 text-xl font-extrabold text-slate-900">
+        {h.href ? <a class="hover:text-brand-700 hover:underline" href={h.href}>{h.titulo}</a> : h.titulo}
+      </h3>
+      {h.verificacionEnCurso && <p class="mt-1.5"><DatoPendiente texto="Verificación en curso" /></p>}
+    </li>
+  ))}
+</ol>

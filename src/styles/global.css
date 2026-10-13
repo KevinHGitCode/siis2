@@ -1,17 +1,97 @@
 @import "tailwindcss";
 
 /*
-  Paleta derivada del logo real de SIIS2 (naranja del wordmark), confirmado y
-  cargado el 2026-09-13 desde brand/siis2-logo-*-original.png.
+  Tipografía de marca (2026-10-13): Bricolage Grotesque variable, solo el subconjunto latin (cubre el español).
+  Viene del paquete npm @fontsource-variable/bricolage-grotesque; Vite la copia a /siis2/_astro (build.assets).
+  Se usa solo en titulares; el cuerpo queda en la fuente del sistema para no sumar peso.
+*/
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('../../node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*
+  Paleta derivada del logo real de SIIS2 (cargado el 2026-09-13 desde brand/siis2-logo-*-original.png).
+  Colores del logo medidos con sharp el 2026-10-13: naranja #f85906, teal #02b4b4, rojo #d22d17, amarillo #f9ae06.
+  Ajuste AA (2026-10-13): brand-700 y brand-800 se oscurecieron para texto pequeño
+  (blanco sobre 700 = 5,76:1; 700 sobre blanco/50/100 = 5,76/5,28/4,61; blanco sobre 800 = 7,64:1).
+  brand-600 (naranja del logo) y los wayuu-* son decorativos: no usarlos como color de texto pequeño.
 */
 @theme {
+  --font-marca: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --color-brand-50: #fff3e7;
   --color-brand-100: #ffe1c2;
-  --color-brand-600: #f2791d;
-  --color-brand-700: #d9630d;
-  --color-brand-800: #b34f0b;
+  --color-brand-600: #f85906;
+  --color-brand-700: #a94908;
+  --color-brand-800: #8a3d05;
+  --color-wayuu-teal: #02b4b4;
+  --color-wayuu-red: #d22d17;
+  --color-wayuu-yellow: #f9ae06;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-marca);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+}
+
+/*
+  Banda de rombos inspirada en el patrón del "2" del logo (teal, rojo, amarillo). SVG embebido: 0 peticiones.
+  Es un adorno del diseño de la marca, no una reproducción de un tejido: no usarla detrás de texto.
+*/
+.banda-wayuu {
+  height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='14' viewBox='0 0 40 14'%3E%3Cpath d='M10 1L19 7L10 13L1 7Z' fill='%2302b4b4'/%3E%3Cpath d='M10 4.5L13.5 7L10 9.5L6.5 7Z' fill='%23fff3e7'/%3E%3Cpath d='M30 1L39 7L30 13L21 7Z' fill='%23d22d17'/%3E%3Cpath d='M30 4.5L33.5 7L30 9.5L26.5 7Z' fill='%23f9ae06'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 40px 14px;
+}
+.banda-wayuu-fina {
+  height: 8px;
+  background-size: 23px 8px;
+}
+
+/*
+  Movimiento sobrio: solo opacity/transform (no mueve el layout), apagado con prefers-reduced-motion.
+  Sin soporte de animation-timeline (Firefox) el contenido simplemente se ve completo.
+*/
+@keyframes sube {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .entra {
+    animation: sube 0.7s ease-out both;
+  }
+  .entra-2 {
+    animation-delay: 0.12s;
+  }
+  .entra-3 {
+    animation-delay: 0.24s;
+  }
+  @supports (animation-timeline: view()) {
+    .revela {
+      animation: sube linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 26%;
+    }
+  }
 }
