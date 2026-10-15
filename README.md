@@ -104,6 +104,7 @@ Todo el texto editable vive en `src/data/`:
 | `proyectos.ts` | Aura («asistencia uniguajira») y Sofía («inventario uniguajira»). ⚠️ Confirmar `href` real. |
 | `logros.ts` | Hackathon Colombia 5.0 → artículo en `src/pages/siis2/logros/`. |
 | `hitos.ts` | Línea de tiempo de `/siis2` (fundación, Aura en vivo + los logros de `logros.ts`). Sin fecha = «Fecha por confirmar». |
+| `aplicaciones.ts` | Apps del portal `/siis2/portal/`: Aura y Sofía salen de `proyectos.ts` (una sola fuente de URL/estado/fecha) + ELISA y Servicios tecnológicos. Logos en `src/assets/apps/` (`node scripts/generar-apps.mjs <assets de Portal-UG>`). |
 | `pilares.ts` | Las 3 tarjetas de «Qué hacemos» (solo hechos confirmados). |
 
 `src/pages/index.astro` (el portal) arma su directorio a partir de `SEMILLERO` y `PROYECTOS` — no

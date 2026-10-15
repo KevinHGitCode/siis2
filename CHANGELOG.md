@@ -4,6 +4,16 @@ Registro con fecha de las decisiones y cambios de fondo del proyecto. Fecha real
 del hecho cuando se conoce; si no, la fecha en que se confirmó el dato (aclarado
 en cada caso). Ver la regla completa en `CLAUDE.md`.
 
+## 2026-10-15
+
+- **Portal de aplicaciones integrado: `/siis2/portal/`.** Reemplaza al sitio aparte «Portal-UG» (repo `ZapataMor/Portal-UG`, hoy en `/Portal-UG/`) para mantener un solo lugar. Página nueva con el estilo del sitio (hero, banda wayuu, tarjetas con el logo de cada app sobre fondo oscuro) que lleva al **inicio de sesión** de cada aplicación; los contadores («3 en vivo», «1 próximamente», «Datos del…») se calculan desde los datos, no están escritos a mano. Icono de cuadrícula arriba a la derecha en `/` y en `/siis2` (componente `BotonApps`) y enlace en el pie. Entra al sitemap y lleva `ItemList` + migas en JSON-LD.
+- **Qué se tomó del portal viejo:** las 4 aplicaciones, sus URLs y logos, y el texto de bienvenida. **Qué se descartó** por no estar confirmado o ser fecha relativa: «Latencia 42 ms», «3 servicios activos» fijo, las versiones (`v3.4.0`…) y «ETA próx. semana». Logos de 1–4 MB (PNG 6000×3375, con un número de diapositiva en la esquina) pasan a 15–56 KB, recortados al contenido (`scripts/generar-apps.mjs`); sale AVIF/WebP con `<Picture>`.
+- **Sofía** pasa de «Acceso restringido» (sin enlace) a **«En vivo» con enlace a su login** (`maicao-inventario.desarrollougmaicao.com/login`), por decisión de Kevin: la restricción solo existía porque aún no había portal. `fechaConfirmada: 2026-10-15`. El pie ya no dice «acceso restringido» (queda «sin enlace público» si una app no tiene URL).
+- **ELISA** (Medición de servicios) y **Servicios tecnológicos** viven en `src/data/aplicaciones.ts`, no en `proyectos.ts`: el semillero no ha confirmado que sean proyectos suyos, y `proyectos.ts` alimenta la sección «Lo que hemos construido». Servicios tecnológicos queda «Próximamente» y sin enlace hasta que Kevin confirme que está en vivo.
+- **Foto de fondo en el hero del portal** (pedido de Kevin): `fondo-campus-maicao.png` del repo Portal-UG (1920×1080, 2,8 MB) pasa a JPG de 260 KB en `src/assets/fondos/` y se sirve en AVIF/JPG (24–118 KB según el ancho). Capa `slate-900/75` encima para que el texto blanco pase AA; la imagen es decorativa (`alt=""`). La genera `scripts/generar-apps.mjs`.
+- **Aura en el portal lleva a su login** (`/login`), no a su landing (pedido de Kevin). `Proyecto` suma `hrefLogin`/`fechaLogin`: la home y `/siis2` siguen enlazando la landing; el portal usa el login. Verificado: `/login` responde 200 con formulario de acceso.
+- Pendiente: decidir qué se hace con `/Portal-UG/` (redirección 301 a `/siis2/portal/` desde el servidor).
+
 ## 2026-10-14
 
 - **Fotos del equipo.** Kevin entregó los retratos (PNG de ~50 MB cada uno) de Kevin, Daniel, Luis, Renzo y del docente líder Carlos Deluquez. `scripts/generar-equipo.mjs` los recorta a 4:5 (640×800) centrando la cara y los deja en `src/assets/equipo/` (~55 KB cada uno); el sitio los sirve en AVIF/JPG con `<Picture>`. `PersonCard` pasa a tarjeta con retrato y el docente lleva su foto circular; quien no tenga foto conserva el avatar de iniciales. `Integrante` suma `foto` (nombre de archivo) y `fechaFoto` (2026-10-14, cuando se recibió).

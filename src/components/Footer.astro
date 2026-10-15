@@ -22,10 +22,11 @@ const year = new Date().getFullYear();
             {p.href ? (
               <a class="transition hover:text-brand-700" href={p.href}>{p.nombre}</a>
             ) : (
-              <span class="text-slate-600">{p.nombre} · acceso restringido</span>
+              <span class="text-slate-600">{p.nombre} · sin enlace público</span>
             )}
           </li>
         ))}
+        <li><a class="font-medium text-brand-700 transition hover:underline" href="/siis2/portal/">Portal de aplicaciones</a></li>
       </ul>
     </div>
     <div>

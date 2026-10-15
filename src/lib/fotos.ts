@@ -3,3 +3,8 @@
 const fotos = import.meta.glob<ImageMetadata>('../assets/equipo/*.jpg', { eager: true, import: 'default' });
 
 export const fotoEquipo = (nombre?: string): ImageMetadata | undefined => (nombre ? fotos[`../assets/equipo/${nombre}.jpg`] : undefined);
+
+// Logos de las aplicaciones del portal: src/assets/apps/*.png, generados por scripts/generar-apps.mjs.
+const apps = import.meta.glob<ImageMetadata>('../assets/apps/*.png', { eager: true, import: 'default' });
+
+export const fotoApp = (nombre?: string): ImageMetadata | undefined => (nombre ? apps[`../assets/apps/${nombre}.png`] : undefined);

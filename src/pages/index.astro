@@ -4,6 +4,7 @@ import logo from '../assets/logo/siis2-logo.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Banda from '../components/Banda.astro';
 import Icono from '../components/Icono.astro';
+import BotonApps from '../components/BotonApps.astro';
 import { SEMILLERO } from '../data/semillero';
 import { PROYECTOS } from '../data/proyectos';
 import { SITIO } from '../lib/schema';
@@ -52,8 +53,9 @@ const destinos = [
 
 <BaseLayout title={title} description={description} ogImage="og-portal.png" ogAlt="Desarrollo Uniguajira Maicao" schema={schema}>
   <header class="border-b border-slate-200">
-    <div class="mx-auto max-w-5xl px-4 py-4">
+    <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
       <span class="font-marca text-lg font-extrabold tracking-tight text-slate-900">Desarrollo Uniguajira Maicao</span>
+      <BotonApps />
     </div>
   </header>
 

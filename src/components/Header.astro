@@ -2,6 +2,7 @@
 import { Picture } from 'astro:assets';
 import logo from '../assets/logo/siis2-logo.png';
 import { SEMILLERO } from '../data/semillero';
+import BotonApps from './BotonApps.astro';
 
 // Enlaces absolutos a /siis2/ para que sirvan también desde las subpáginas (p. ej. /siis2/logros/...).
 const inicio = '/siis2/';
@@ -30,6 +31,7 @@ const unirse = `${inicio}#sumate`;
       />
     </a>
 
+    <div class="flex items-center gap-3">
     <ul class="hidden items-center gap-6 text-sm font-medium text-slate-700 sm:flex">
       {links.map((l) => (
         <li><a class="transition hover:text-brand-700" href={l.href}>{l.label}</a></li>
@@ -38,6 +40,8 @@ const unirse = `${inicio}#sumate`;
         <a class="rounded-lg bg-brand-700 px-4 py-2 text-white transition hover:bg-brand-800" href={unirse}>Quiero unirme</a>
       </li>
     </ul>
+
+    <BotonApps />
 
     <details class="relative sm:hidden" id="menu-movil">
       <summary class="flex cursor-pointer list-none items-center rounded-lg border border-slate-300 p-2 text-slate-700" aria-label="Abrir menú">
@@ -54,6 +58,7 @@ const unirse = `${inicio}#sumate`;
         </li>
       </ul>
     </details>
+    </div>
   </nav>
 </header>
 

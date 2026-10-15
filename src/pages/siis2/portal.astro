@@ -1,0 +1,141 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Banda from '../../components/Banda.astro';
+import Icono from '../../components/Icono.astro';
+import { APLICACIONES } from '../../data/aplicaciones';
+import { SEMILLERO } from '../../data/semillero';
+import { SITIO, schemaMigas } from '../../lib/schema';
+import { formatearFecha, masReciente } from '../../lib/fechas';
+import { fotoApp } from '../../lib/fotos';
+import campus from '../../assets/fondos/campus-maicao.jpg';
+
+const title = 'Portal de aplicaciones — Universidad de La Guajira, sede Maicao';
+const description =
+  'Acceso unificado a las plataformas de la Universidad de La Guajira en Maicao: asistencia (Aura), inventario (Sofía), medición de servicios (ELISA) y más.';
+const canonical = `${SITIO}/siis2/portal/`;
+
+const enVivo = APLICACIONES.filter((a) => a.href);
+const proximas = APLICACIONES.filter((a) => !a.href);
+const actualizado = masReciente(APLICACIONES.map((a) => a.fechaConfirmada));
+
+const schema = [
+  schemaMigas([
+    { nombre: 'Desarrollo Uniguajira Maicao', url: `${SITIO}/` },
+    { nombre: SEMILLERO.nombreCorto, url: `${SITIO}/siis2/` },
+    { nombre: 'Portal de aplicaciones', url: canonical },
+  ]),
+  {
+    '@type': 'ItemList',
+    name: 'Aplicaciones de la Universidad de La Guajira, sede Maicao',
+    itemListElement: enVivo.map((a, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: { '@type': 'SoftwareApplication', name: a.nombre, applicationCategory: a.categoria, url: a.href },
+    })),
+  },
+];
+---
+
+<BaseLayout title={title} description={description} schema={schema}>
+  <Header />
+
+  <main>
+    <section class="relative isolate overflow-hidden bg-slate-900">
+      <Picture
+        src={campus}
+        formats={['avif']}
+        fallbackFormat="jpg"
+        widths={[640, 960, 1280, 1920]}
+        sizes="100vw"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 -z-20 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 -z-10 bg-slate-900/80" aria-hidden="true"></div>
+      <div class="mx-auto max-w-5xl px-4 pb-12 pt-12 text-center [text-shadow:0_1px_14px_rgb(0_0_0/0.55)]">
+        <p class="entra font-mono text-xs uppercase tracking-wider text-amber-200">{SEMILLERO.universidad} · Sede {SEMILLERO.sede}</p>
+        <h1 class="entra entra-2 mx-auto mt-3 max-w-3xl text-4xl font-extrabold text-white sm:text-6xl">Portal de aplicaciones</h1>
+        <p class="entra entra-3 mx-auto mt-5 max-w-2xl text-lg text-white">
+          Acceso unificado a las plataformas para la gestión académica, administrativa y tecnológica de la sede. Elige una y entra con tu usuario.
+        </p>
+        <ul class="entra entra-3 mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-mono text-xs font-medium text-white">
+          <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-wayuu-teal" aria-hidden="true"></span>{enVivo.length} en vivo</li>
+          {proximas.length > 0 && (
+            <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-wayuu-yellow" aria-hidden="true"></span>{proximas.length} próximamente</li>
+          )}
+          <li>Datos del {formatearFecha(actualizado)}</li>
+        </ul>
+      </div>
+      <Banda arriba />
+    </section>
+
+    <section class="mx-auto max-w-5xl px-4 py-14" aria-label="Aplicaciones">
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {APLICACIONES.map((a) => {
+          const logo = fotoApp(a.logo);
+          const Tag = a.href ? 'a' : 'div';
+          return (
+            <li class="revela">
+              <Tag
+                href={a.href}
+                target={a.href ? '_blank' : undefined}
+                rel={a.href ? 'noopener' : undefined}
+                class:list={[
+                  'group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 transition',
+                  a.href ? 'bg-white hover:shadow-lg motion-safe:hover:-translate-y-1' : 'bg-slate-50',
+                ]}
+              >
+                <div class="relative flex h-40 items-center justify-center bg-slate-900 p-6">
+                  {logo ? (
+                    <Picture
+                      src={logo}
+                      formats={['avif']}
+                      fallbackFormat="png"
+                      widths={[240, 360, 480]}
+                      sizes="(min-width: 640px) 330px, 80vw"
+                      alt={`Logo de ${a.nombre}`}
+                      class="max-h-full w-auto max-w-full object-contain"
+                    />
+                  ) : (
+                    <span class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/30 text-white">
+                      <Icono nombre="codigo" class="h-9 w-9" />
+                    </span>
+                  )}
+                  <span class="absolute right-3 top-3 rounded-md border border-white/60 bg-slate-900 px-2 py-0.5 font-mono text-xs text-white">
+                    {a.href ? 'En vivo' : a.estado}
+                  </span>
+                </div>
+                <Banda fina />
+                <div class="flex flex-1 flex-col p-5">
+                  <p class="font-mono text-xs uppercase tracking-wider text-brand-700">{a.categoria}</p>
+                  <h2 class="mt-1 text-2xl font-extrabold text-slate-900">{a.nombre}</h2>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-700">{a.descripcion}</p>
+                  {a.href ? (
+                    <span class="mt-4 text-sm font-semibold text-brand-700 group-hover:underline">
+                      Abrir aplicación
+                      <svg viewBox="0 0 24 24" class="ml-0.5 inline h-4 w-4 -translate-y-px" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg>
+                      <span class="sr-only"> (se abre en otra pestaña)</span>
+                    </span>
+                  ) : (
+                    <span class="mt-4 text-sm font-semibold text-slate-700">Aún sin enlace de acceso</span>
+                  )}
+                  <p class="mt-3 font-mono text-xs text-slate-600">Confirmado el {formatearFecha(a.fechaConfirmada)}</p>
+                </div>
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+      <p class="mt-8 text-center text-sm text-slate-700">
+        Cada aplicación tiene su propio inicio de sesión. ¿Qué es esto? Lo construye y mantiene el
+        <a class="font-semibold text-brand-700 underline" href="/siis2/">semillero {SEMILLERO.nombreCorto}</a>.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
