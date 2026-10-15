@@ -13,9 +13,8 @@ const FOTOS = {
   luis: { cx: 356, ty: 65 },
   renzo: { cx: 340, ty: 52 },
   carlos: { cx: 328, ty: 35 },
-  wence: { cx: 330, ty: 45 },
 };
-const SIN_PUBLICAR = ['wence'];
+const SIN_PUBLICAR = [];
 const ALTO_VISTA = 340;
 const ANCHO_VISTA = ALTO_VISTA * 0.8;
 
