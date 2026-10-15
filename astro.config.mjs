@@ -17,7 +17,8 @@ export default defineConfig({
   build: { assets: 'siis2/_astro' }, // los JS/CSS generados salen en dist/siis2/_astro y se piden como /siis2/_astro/...
   integrations: [mdx(), sitemap({
       // Borrador sin datos confirmados: fuera del sitemap mientras tenga noindex (quitar este filtro al confirmarlo).
-      filter: (page) => !page.includes('/siis2/logros/colombia-5-0'),
+      // Las páginas de error (/siis2/404, 403, 500) tampoco van: son noindex y solo las usa el servidor.
+      filter: (page) => !/\/siis2\/(logros\/colombia-5-0|404|403|500)/.test(page),
     })],
   vite: {
     plugins: [tailwindcss()],

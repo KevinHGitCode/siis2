@@ -12,7 +12,9 @@ en cada caso). Ver la regla completa en `CLAUDE.md`.
 - **ELISA** (Medición de servicios) y **Servicios tecnológicos** viven en `src/data/aplicaciones.ts`, no en `proyectos.ts`: el semillero no ha confirmado que sean proyectos suyos, y `proyectos.ts` alimenta la sección «Lo que hemos construido». Servicios tecnológicos queda «Próximamente» y sin enlace hasta que Kevin confirme que está en vivo.
 - **Foto de fondo en el hero del portal** (pedido de Kevin): `fondo-campus-maicao.png` del repo Portal-UG (1920×1080, 2,8 MB) pasa a JPG de 260 KB en `src/assets/fondos/` y se sirve en AVIF/JPG (24–118 KB según el ancho). Capa `slate-900/75` encima para que el texto blanco pase AA; la imagen es decorativa (`alt=""`). La genera `scripts/generar-apps.mjs`.
 - **Aura en el portal lleva a su login** (`/login`), no a su landing (pedido de Kevin). `Proyecto` suma `hrefLogin`/`fechaLogin`: la home y `/siis2` siguen enlazando la landing; el portal usa el login. Verificado: `/login` responde 200 con formulario de acceso.
-- Pendiente: decidir qué se hace con `/Portal-UG/` (redirección 301 a `/siis2/portal/` desde el servidor).
+- **`/Portal-UG/` redirige a `/siis2/portal/`.** Kevin borró la carpeta vieja del servidor (daba 404); la redirección 301 va en `public_html/.htaccess` (regla en el README, sección Despliegue). No se hizo en el build (meta-refresh) para no añadir otra carpeta a la raíz de `dist/` ni otro enlace en `public_html`.
+
+- **Páginas de error 404, 403 y 500** (`src/components/PaginaError.astro` + `src/pages/siis2/{404,403,500}.astro`) con el estilo del sitio: código grande, mensaje claro, botones al inicio, al semillero y al portal; el 500 suma «Intentar de nuevo». `noindex` y fuera del sitemap (`filter` en `astro.config.mjs`). Salen en `dist/siis2/<código>/` y el servidor las toma con `ErrorDocument` (README > Despliegue). No se inventó ningún canal de contacto: el 403 dice «avisa al equipo del semillero».
 
 ## 2026-10-14
 

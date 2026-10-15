@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Banda from './Banda.astro';
+
+// Plantilla de las páginas de error (/siis2/404, /siis2/403, /siis2/500). Van bajo /siis2/ por la regla de la raíz de dist/;
+// el servidor las usa con ErrorDocument (ver README > Despliegue). noindex y fuera del sitemap.
+interface Props {
+  codigo: '403' | '404' | '500';
+  titulo: string; // lo que pasó, en una frase
+  mensaje: string; // qué puede hacer la persona
+  reintentar?: boolean; // muestra «Intentar de nuevo» (recarga la página)
+}
+
+const { codigo, titulo, mensaje, reintentar = false } = Astro.props;
+const enlaces = [
+  { href: '/', texto: 'Ir al inicio' },
+  { href: '/siis2/', texto: 'Semillero SIIS2' },
+  { href: '/siis2/portal/', texto: 'Portal de aplicaciones' },
+];
+---
+
+<BaseLayout title={`${titulo} (${codigo}) — SIIS2`} description={mensaje} noindex schema={[]}>
+  <Header />
+
+  <main>
+    <section class="bg-brand-50">
+      <div class="mx-auto max-w-3xl px-4 pb-14 pt-14 text-center sm:pt-20">
+        <p class="entra font-marca text-8xl font-extrabold leading-none text-brand-700 sm:text-9xl" aria-hidden="true">{codigo}</p>
+        <h1 class="entra entra-2 mt-5 text-3xl font-extrabold text-slate-900 sm:text-5xl">{titulo}</h1>
+        <p class="entra entra-3 mx-auto mt-4 max-w-xl text-lg text-slate-700">{mensaje}</p>
+        <div class="entra entra-3 mt-8 flex flex-wrap justify-center gap-3">
+          {reintentar && (
+            <button type="button" id="reintentar" class="rounded-xl bg-brand-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-800">
+              Intentar de nuevo
+            </button>
+          )}
+          {enlaces.map((e, i) => (
+            <a
+              href={e.href}
+              class:list={[
+                'rounded-xl px-6 py-3 text-sm font-semibold transition',
+                i === 0 && !reintentar
+                  ? 'bg-brand-700 text-white hover:bg-brand-800'
+                  : 'border border-slate-400 bg-white text-slate-800 hover:bg-slate-50',
+              ]}
+            >
+              {e.texto}
+            </a>
+          ))}
+        </div>
+      </div>
+      <Banda arriba />
+    </section>
+  </main>
+
+  <Footer />
+
+  {reintentar && <script>document.getElementById('reintentar')?.addEventListener('click', () => location.reload());</script>}
+</BaseLayout>

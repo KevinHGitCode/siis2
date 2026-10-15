@@ -61,6 +61,28 @@ Cambio de despliegue (una sola vez, ya con este orden): `git pull` y quitar los 
 (`public_html/_astro`, `public_html/images`, `public_html/favicon.png`) con `rm` (sin `-r`: son enlaces). No hay que tocar
 `siis2`, `index.html`, `robots.txt` ni los sitemap: siguen apuntando a los mismos nombres.
 
+**Redirección de la ruta vieja (2026-10-15):** el portal viejo estaba en `public_html/Portal-UG`; esa carpeta se borró y ahora `/Portal-UG/`
+redirige (301) a `/siis2/portal/` con una regla en `public_html/.htaccess` (no vive en este repo: es del servidor):
+
+```apache
+RedirectMatch 301 "(?i)^/portal-ug(/.*)?$" /siis2/portal/
+```
+
+Comprobar: `curl -sI https://desarrollougmaicao.com/Portal-UG/` debe dar `301` y `Location: /siis2/portal/`.
+
+**Páginas de error (2026-10-15):** `/siis2/404/`, `/siis2/403/` y `/siis2/500/` (bajo `siis2/` por la regla de la raíz de `dist/`; `noindex`, fuera del
+sitemap). El servidor las usa con estas líneas en `public_html/.htaccess` (en la raíz de `dist/` no se puede poner `404.html` sin otro enlace):
+
+```apache
+ErrorDocument 403 /siis2/403/
+ErrorDocument 404 /siis2/404/
+ErrorDocument 500 /siis2/500/
+```
+
+Comprobar: `curl -sI https://desarrollougmaicao.com/no-existe` debe dar `404` y mostrar la página nueva (con el estado 404, no 200).
+⚠️ Esas reglas también alcanzan a las carpetas de subdominio que viven dentro de `public_html` (`asistencia`, etc.): si una app pide un archivo
+que no existe y no lo maneja ella, el servidor buscaría `/siis2/404/` en ese subdominio. Es poco probable, pero si pasa, mover las reglas a un `.htaccess` solo del dominio raíz.
+
 ⚠️ **No tocar** `public_html/asistencia`, `invoritech` y los demás enlaces de otros proyectos.
 
 ⚠️ **Contenido duplicado:** como esas carpetas de subdominio viven dentro del document root de la
