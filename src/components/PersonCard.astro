@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import type { Integrante } from '../data/integrantes';
+import { fotoEquipo } from '../lib/fotos';
 
 interface Props {
   integrante: Integrante;
@@ -7,6 +9,7 @@ interface Props {
 }
 
 const { integrante, indice = 0 } = Astro.props;
+const foto = fotoEquipo(integrante.foto);
 const iniciales = integrante.nombre
   .split(' ')
   .map((n) => n[0])
@@ -22,9 +25,17 @@ const estilos = [
 ];
 ---
 
-<div class="revela flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4">
-  {integrante.foto ? (
-    <img src={integrante.foto} alt={integrante.nombre} class="h-12 w-12 shrink-0 rounded-full object-cover" />
+<div class:list={['revela overflow-hidden rounded-2xl border border-slate-200 bg-white', !foto && 'flex items-center gap-3 p-4']}>
+  {foto ? (
+    <Picture
+      src={foto}
+      formats={['avif']}
+      fallbackFormat="jpg"
+      widths={[240, 360, 480]}
+      sizes="(min-width: 1024px) 240px, (min-width: 640px) 45vw, 90vw"
+      alt={`${integrante.nombre}, ${integrante.rol.toLowerCase()} del semillero SIIS2`}
+      class="aspect-[4/5] w-full object-cover"
+    />
   ) : (
     <div
       class:list={[
@@ -36,7 +47,7 @@ const estilos = [
       {iniciales}
     </div>
   )}
-  <div>
+  <div class:list={[foto && 'p-4']}>
     <p class="font-semibold text-slate-900">{integrante.nombre}</p>
     <p class="text-sm text-slate-600">{integrante.rol}</p>
   </div>

@@ -4,6 +4,12 @@ Registro con fecha de las decisiones y cambios de fondo del proyecto. Fecha real
 del hecho cuando se conoce; si no, la fecha en que se confirmó el dato (aclarado
 en cada caso). Ver la regla completa en `CLAUDE.md`.
 
+## 2026-10-14
+
+- **Fotos del equipo.** Kevin entregó los retratos (PNG de ~50 MB cada uno) de Kevin, Daniel, Luis, Renzo y del docente líder Carlos Deluquez. `scripts/generar-equipo.mjs` los recorta a 4:5 (640×800) centrando la cara y los deja en `src/assets/equipo/` (~55 KB cada uno); el sitio los sirve en AVIF/JPG con `<Picture>`. `PersonCard` pasa a tarjeta con retrato y el docente lleva su foto circular; quien no tenga foto conserva el avatar de iniciales. `Integrante` suma `foto` (nombre de archivo) y `fechaFoto` (2026-10-14, cuando se recibió).
+- **Una sexta foto («wence») no se publica:** esa persona no está entre los 4 integrantes autorizados. Queda recortada en `brand/equipo-sin-publicar/` (fuera del build) hasta que Kevin confirme nombre, rol y autorización.
+- Pendiente: consentimiento formal de las personas que aparecen en las fotos (ver pendientes del README).
+
 ## 2026-10-13
 
 - Decisión de Kevin: **Sofía va en la página** (sigue listada en `/siis2` como hasta ahora, sin enlace público; las instrucciones sobre ella vienen después) e **Invoritech no va** (no se lista ni se enlaza). No hay cambios de datos ni de build por esta decisión. El `Disallow` de `/invoritech/` en `robots.txt` se mantiene: evita contenido duplicado y es independiente de esta decisión.

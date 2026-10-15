@@ -53,6 +53,7 @@ nuevas en `public/` ni en la raíz de `dist/`**; cuélgalas de `public/siis2/`. 
 - **Color:** para texto pequeño solo `brand-700/800` (pasan AA). `brand-600` y `wayuu-*` son decorativos. Todo texto nuevo debe dar ≥ 4,5:1.
 - **Banda wayuu (V3):** adorno de marca derivado de un motivo wayuu, no un tejido auténtico; nunca detrás de texto, ni se presenta como patrón cultural «oficial».
   Fuente: `brand/patrones/` (se conservan V1, V2 y V3); el sitio usa `src/styles/banda-v3*.svg`, que genera `node scripts/generar-patrones.mjs`.
+- **Fotos del equipo:** originales fuera del repo; `node scripts/generar-equipo.mjs [carpeta]` genera retratos 4:5 en `src/assets/equipo/` (encuadre por persona dentro del script). Solo se publican las personas autorizadas; el resto va a `brand/equipo-sin-publicar/`.
 - **Movimiento:** solo `opacity`/`transform`, con `prefers-reduced-motion`; sin librerías de animación ni parallax.
 - **Lo que falta se dice con `DatoPendiente`** («Por confirmar», «En definición»); no se rellena con texto genérico ni se inventan fotos, cifras o testimonios.
 - **Fechas visibles** salen de los datos (`fechaConfirmada`, `fechaRegistro`) con `src/lib/fechas.ts`; no usar la fecha del build para datos.

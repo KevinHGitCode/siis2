@@ -14,7 +14,8 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import Timeline from '../../components/Timeline.astro';
 import Sumate from '../../components/Sumate.astro';
 import { SEMILLERO } from '../../data/semillero';
-import { INTEGRANTES } from '../../data/integrantes';
+import { INTEGRANTES, FOTO_DOCENTE } from '../../data/integrantes';
+import { fotoEquipo } from '../../lib/fotos';
 import { PROYECTOS } from '../../data/proyectos';
 import { PILARES } from '../../data/pilares';
 import { SITIO, schemaMigas, schemaSemillero } from '../../lib/schema';
@@ -33,6 +34,7 @@ const colorPilar = {
   teal: 'bg-wayuu-teal text-slate-900',
   rojo: 'bg-wayuu-red text-white',
 };
+const fotoDocente = fotoEquipo(FOTO_DOCENTE.foto);
 const inicialesDocente = SEMILLERO.docenteLider
   .split(' ')
   .map((n) => n[0])
@@ -100,9 +102,21 @@ const inicialesDocente = SEMILLERO.docenteLider
 
     <Section id="equipo" etiqueta="Equipo" titulo="Las personas del semillero">
       <div class="revela mb-4 flex items-center gap-4 rounded-2xl bg-brand-50 p-5">
-        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-700 font-marca text-lg font-extrabold text-white" aria-hidden="true">
-          {inicialesDocente}
-        </div>
+        {fotoDocente ? (
+          <Picture
+            src={fotoDocente}
+            formats={['avif']}
+            fallbackFormat="jpg"
+            widths={[80, 160, 240]}
+            sizes="80px"
+            alt={`${SEMILLERO.docenteLider}, docente líder del semillero SIIS2`}
+            class="h-20 w-20 shrink-0 rounded-full object-cover object-top"
+          />
+        ) : (
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-700 font-marca text-lg font-extrabold text-white" aria-hidden="true">
+            {inicialesDocente}
+          </div>
+        )}
         <div>
           <p class="font-mono text-xs uppercase tracking-wider text-brand-700">Docente líder</p>
           <p class="text-xl font-extrabold text-slate-900">{SEMILLERO.docenteLider}</p>
