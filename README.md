@@ -143,3 +143,7 @@ contacto, producción académica formal, permiso institucional para publicar, pl
 de traspaso al graduarse, datos del hackathon Colombia 5.0.
 
 Ficha completa en el segundo cerebro: `MyBrain/proyectos/idea-web-semillero-siis2.md`.
+
+## Licencia
+
+El código se publica bajo licencia [MIT](LICENSE). Quedan fuera de esa licencia los logos, nombres, textos e imágenes del semillero SIIS2 y de la Universidad de La Guajira, que pertenecen a sus titulares.
